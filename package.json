@@ -8,9 +8,21 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "lint": "eslint . --ext .js,.astro,.ts,.tsx",
+    "lint:fix": "npm run lint -- --fix",
+    "prettier:check": "npx prettier . --check",
+    "prettier:fix": "npx prettier . --write"
   },
   "dependencies": {
     "astro": "^2.0.1"
+  },
+  "devDependencies": {
+    "@typescript-eslint/parser": "5.49.0",
+    "eslint": "8.32.0",
+    "eslint-plugin-astro": "0.23.0",
+    "prettier": "2.8.3",
+    "prettier-plugin-astro": "0.7.2",
+    "standard": "17.0.0"
   }
 }
