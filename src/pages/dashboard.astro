@@ -1,5 +1,99 @@
 ---
 import { Dashboard } from '@components/Dashboard'
+import Navbar from '@components/Navbar.astro'
+import Tabs from '@components/Tabs.astro'
 ---
 
-<Dashboard />
+<!-- <Dashboard client:visible /> -->
+<html lang='en'>
+  <head>
+    <meta charset='UTF-8' />
+    <title>boostgrammar.io</title>
+  </head>
+  <body>
+    <Navbar />
+    <Tabs />
+    <main class='min-h-screen bg-[#0d1117] px-5 md:px-12 pt-10'>
+      <div class='grid gap-6 grid-cols-[repeat(auto-fill,minmax(320px,_1fr))]'>
+        <div
+          class='rounded-lg p-0.5 shadow bg-gradient-to-r from-[#7debf2] to-[#60a4ff] max-h-full transition hover:scale-105'
+        >
+          <div class='bg-[#0d1117] rounded-lg h-full'>
+            <a href='#' class='h-full block overflow-hidden'>
+              <div class='flex flex-col w-full h-full p-6 justify-between'>
+                <span class='mb-2 text-slate-400 text-sm text-right'>Thursday 13:30</span>
+                <p class='font-semibold text-gray-200 mb-4'>
+                  this an example of tezt, feelg frei to modify and apply the necesary changes
+                </p>
+                <div class='flex flex-row border-t-2 border-gray-700 pt-4'>
+                  <span
+                    class='text-sm font-semibold mr-2 px-2.5 py-0.5 rounded-lg bg-green-300 text-green-800'
+                  >
+                    Words: 1400
+                  </span>
+                  <span
+                    class='text-sm font-semibold mr-2 px-2.5 py-0.5 rounded-lg bg-red-300 text-red-800'
+                  >
+                    Mistakes: 19
+                  </span>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+        <div
+          class='rounded-lg p-0.5 shadow bg-gradient-to-r from-[#7debf2] to-[#60a4ff] max-h-full transition hover:scale-105'
+        >
+          <div class='bg-[#0d1117] rounded-lg h-full'>
+            <a href='#' class='h-full block overflow-hidden'>
+              <div class='flex flex-col w-full h-full p-6 justify-between'>
+                <span class='mb-2 text-slate-400 text-sm text-right'>Thursday 13:30</span>
+                <p class='font-semibold text-gray-200 mb-4'>
+                  this an example of tezt, feelg frei to modify and apply the necesary changes
+                </p>
+                <div class='flex flex-row border-t-2 border-gray-700 pt-4'>
+                  <span
+                    class='text-sm font-semibold mr-2 px-2.5 py-0.5 rounded-lg bg-green-300 text-green-800'
+                  >
+                    Words: 1400
+                  </span>
+                  <span
+                    class='text-sm font-semibold mr-2 px-2.5 py-0.5 rounded-lg bg-red-300 text-red-800'
+                  >
+                    Mistakes: 19
+                  </span>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+        <div
+          class='rounded-lg p-0.5 shadow bg-gradient-to-r from-[#7debf2] to-[#60a4ff] max-h-full transition hover:scale-105'
+        >
+          <div class='bg-[#0d1117] rounded-lg h-full'>
+            <a href='#' class='h-full block overflow-hidden'>
+              <div class='flex flex-col w-full h-full p-6 justify-between'>
+                <span class='mb-2 text-slate-400 text-sm text-right'>Thursday 13:30</span>
+                <p class='font-semibold text-gray-200 mb-4'>
+                  this an example of tezt, feelg frei to modify and apply the necesary changes
+                </p>
+                <div class='flex flex-row border-t-2 border-gray-700 pt-4'>
+                  <span
+                    class='text-sm font-semibold mr-2 px-2.5 py-0.5 rounded-lg bg-green-300 text-green-800'
+                  >
+                    Words: 1400
+                  </span>
+                  <span
+                    class='text-sm font-semibold mr-2 px-2.5 py-0.5 rounded-lg bg-red-300 text-red-800'
+                  >
+                    Mistakes: 19
+                  </span>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
