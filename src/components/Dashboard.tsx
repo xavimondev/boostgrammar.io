@@ -13,12 +13,22 @@ export function Dashboard() {
       setSession(session)
       console.log(session)
     })
+
+    // fetch('/api/grammar', {
+    //   method: 'POST',
+    //   body: JSON.stringify({
+    //     input: 'He live next to my houses'
+    //   })
+    // })
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     console.log(data)
+    //   })
   }, [])
 
   return (
     <>
       <h1>Eyyy hola</h1>
-      {!session ? <span>User not logged</span> : <span>User logged</span>}
     </>
   )
 }
