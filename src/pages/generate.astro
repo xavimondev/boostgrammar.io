@@ -1,4 +1,5 @@
 ---
+import { UserInput } from '@components/UserInput'
 import { WaitingData } from '@components/WaitingData'
 ---
 
@@ -29,7 +30,7 @@ import { WaitingData } from '@components/WaitingData'
     <main class='bg-[#0d1117] px-5 md:px-12 pt-10 min-h-screen'>
       <div class='grid grid-cols-2 h-full'>
         <div class='w-full flex flex-col'>
-          <div class='mb-14'>
+          <div class='mb-10'>
             <input
               type='text'
               class='bg-[#0d1117] font-bold sm:text-lg border-none focus:outline-none text-white w-full'
@@ -38,11 +39,7 @@ import { WaitingData } from '@components/WaitingData'
             />
           </div>
           <div class='h-full'>
-            <textarea
-              name='userInput'
-              placeholder='Type or paste your text here'
-              class='bg-[#0d1117] text-lg sm:text-xl resize-none focus:outline-none text-white w-full h-full'
-            ></textarea>
+            <UserInput client:load />
           </div>
         </div>
         <aside class='w-full'>
