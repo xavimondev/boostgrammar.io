@@ -1,8 +1,13 @@
-import { useCallback } from 'preact/hooks'
+import { StateUpdater, useCallback } from 'preact/hooks'
 import debounce from 'just-debounce-it'
 import { getCorrectionFromInput } from 'src/services/grammar'
 
-export function UserInput() {
+type UserInputProps = {
+  updateOutputValue: StateUpdater<string>
+  setLoading: StateUpdater<boolean>
+}
+
+export function UserInput({ updateOutputValue, setLoading }: UserInputProps) {
   const autoCompleteDebounce = useCallback(
     debounce(async (inputValue: string) => {
       const correctionValue = await getCorrectionFromInput(inputValue)
@@ -10,6 +15,8 @@ export function UserInput() {
         inputValue,
         correctionValue
       })
+      setLoading(false)
+      updateOutputValue(correctionValue)
     }, 150),
     []
   )
@@ -19,6 +26,7 @@ export function UserInput() {
     const inputValue = e.target.value
     if (inputValue === '') return
     // trigger debounce
+    setLoading(true)
     autoCompleteDebounce(inputValue)
   }
 
