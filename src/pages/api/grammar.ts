@@ -34,7 +34,12 @@ Correct sample: "My friend thinks pair programming is a good way to know other p
 --
 Incorrect sample: "Despite the fact that working from home has its benefits, such as being able to avoid the daily commute and have a much flexible schedule, it also have its drawbacks, such as the lack of social interaction and a difficulty of separating work from personal life."
 Correct sample: "Even though working from home has its benefits, such as avoiding the daily commute and having a more flexible schedule, it also has its drawbacks, such as the lack of social interaction and the difficulty of separating work from personal life."
---`
+--
+Incorrect sample: "I need eat apple"
+Correct sample: "I need to eat an apple"
+--
+Incorrect sample: "hello i'm xavi from peru"
+Correct sample: "Hello I'm Xavi from Peru"`
 
 export const post: APIRoute = async ({ request }) => {
   const { input } = await request.json()
