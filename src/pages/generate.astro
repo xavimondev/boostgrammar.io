@@ -1,0 +1,77 @@
+---
+import { WaitingData } from '@components/WaitingData'
+---
+
+<html lang='en'>
+  <head>
+    <meta charset='UTF-8' />
+    <title>boostgrammar.io</title>
+  </head>
+  <body>
+    <nav class='px-5 md:px-12 bg-gray-900'>
+      <div class='flex h-16 items-center justify-between'>
+        <a class='text-xl text-white' href='/dashboard'>boostgrammar.io</a>
+        <div class='flex flex-row justify-center items-center gap-6'>
+          <button
+            class='rounded-full py-2 px-0.5 text-white text-sm bg-gradient-to-r from-[#7debf2] to-[#60a4ff]'
+          >
+            <span class='py-2 px-7 rounded-full bg-[#0d1117]'>Save</span>
+          </button>
+          <button
+            class='rounded-full py-2 px-0.5 text-white text-sm bg-gradient-to-r from-[#7debf2] to-[#60a4ff]'
+          >
+            <span class='py-2 px-7 rounded-full bg-[#0d1117]'>Cancel</span>
+          </button>
+        </div>
+      </div>
+    </nav>
+    <!-- grid-cols-1 md:grid-cols-3 -->
+    <main class='bg-[#0d1117] px-5 md:px-12 pt-10 min-h-screen'>
+      <div class='grid grid-cols-2 h-full'>
+        <div class='w-full flex flex-col'>
+          <div class='mb-14'>
+            <input
+              type='text'
+              class='bg-[#0d1117] font-bold sm:text-lg border-none focus:outline-none text-white w-full'
+              placeholder='Change document name'
+              autofocus
+            />
+          </div>
+          <div class='h-full'>
+            <textarea
+              name='userInput'
+              placeholder='Type or paste your text here'
+              class='bg-[#0d1117] text-lg sm:text-xl resize-none focus:outline-none text-white w-full h-full'
+            ></textarea>
+          </div>
+        </div>
+        <aside class='w-full'>
+          <div class='flex flex-col h-full'>
+            <div class='mb-8'>
+              <span class='font-bold text-white text-base sm:text-lg'>Suggestions</span>
+            </div>
+            <div class='h-full mb-8'>
+              <p class='text-lg sm:text-xl text-white'></p>
+              <WaitingData />
+            </div>
+            <div class='h-full flex flex-col gap-4'>
+              <span class='font-bold text-white text-base sm:text-lg'>Synonyms</span>
+              <div class='flex flex-wrap gap-3'>
+                <button
+                  class='py-1.5 px-8 text-white rounded-full font-semibold transition ease-in-out delay-75 bg-blue-500 hover:-translate-y-1 hover:scale-110 hover:bg-green-500 duration-300'
+                >
+                  home
+                </button>
+                <button
+                  class='py-1.5 px-8 text-white rounded-full font-semibold transition ease-in-out delay-75 bg-blue-500 hover:-translate-y-1 hover:scale-110 hover:bg-green-500 duration-300'
+                >
+                  house
+                </button>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </main>
+  </body>
+</html>
