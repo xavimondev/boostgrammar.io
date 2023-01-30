@@ -32,6 +32,7 @@ export function UserInput({ updateOutputValue, setLoading }: UserInputProps) {
 
   return (
     <textarea
+      id='userInput'
       name='userInput'
       placeholder='Type or paste your text here'
       class='bg-[#0d1117] text-lg sm:text-xl resize-none focus:outline-none text-white w-full h-full'

@@ -11,6 +11,7 @@ export function GrammarFix() {
       <div class='w-full flex flex-col'>
         <div class='mb-10'>
           <input
+            id='documentTitle'
             type='text'
             class='bg-[#0d1117] font-bold sm:text-lg border-none focus:outline-none text-white w-full'
             placeholder='Change document name'
@@ -29,7 +30,9 @@ export function GrammarFix() {
           <div class='h-full mb-8'>
             {loading && <span class='text-white font-semibold text-xl'>Loading results</span>}
             {outputValue ? (
-              <p class='text-lg sm:text-xl text-white'>{outputValue}</p>
+              <p class='text-lg sm:text-xl text-white' id='grammarOutput'>
+                {outputValue}
+              </p>
             ) : (
               <WaitingData />
             )}
