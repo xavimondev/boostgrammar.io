@@ -27,7 +27,9 @@ export const saveDocument = async (document: Document) => {
 }
 
 export const getAllDocuments = async () => {
-  const { data, error } = await supabase.from('documents').select()
+  const { data, error } = await supabase
+    .from('documents')
+    .select('id, title, user_input, total_words, total_mistakes, created_at')
   if (error) {
     console.log(error)
   }
