@@ -1,4 +1,4 @@
-import { signInWithGitHub } from 'src/services/auth'
+import { signInWithGitHub } from '@services/auth'
 
 export function SignInButton() {
   const handleLogin = async () => {

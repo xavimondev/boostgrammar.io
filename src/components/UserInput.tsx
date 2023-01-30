@@ -1,6 +1,6 @@
 import { StateUpdater, useCallback } from 'preact/hooks'
 import debounce from 'just-debounce-it'
-import { getCorrectionFromInput } from 'src/services/grammar'
+import { getCorrectionFromInput } from '@services/grammar'
 
 type UserInputProps = {
   updateOutputValue: StateUpdater<string>

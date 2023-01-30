@@ -4,7 +4,7 @@ import Layout from '@layouts/base.astro'
 import Navbar from '@components/Navbar.astro'
 import Tabs from '@components/Tabs.astro'
 import DocumentCard from '@components/DocumentCard.astro'
-import { getAllDocuments } from 'src/services/document'
+import { getAllDocuments } from '@services/document'
 
 const { data } = await getAllDocuments()
 ---

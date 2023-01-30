@@ -1,4 +1,4 @@
-import { signOut } from 'src/services/auth'
+import { signOut } from '@services/auth'
 
 export function SignOutButton() {
   const logout = async () => {
