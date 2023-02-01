@@ -1,5 +1,4 @@
 ---
-// import { Dashboard } from '@components/Dashboard'
 import Layout from '@layouts/base.astro'
 import Navbar from '@components/Navbar.astro'
 import Tabs from '@components/Tabs.astro'
@@ -9,7 +8,6 @@ import { getAllDocuments } from '@services/document'
 const { data } = await getAllDocuments()
 ---
 
-<!-- <Dashboard client:visible /> -->
 <Layout>
   <Navbar />
   <Tabs />
