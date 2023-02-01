@@ -17,6 +17,7 @@
   "dependencies": {
     "@astrojs/preact": "2.0.0",
     "@astrojs/tailwind": "3.0.0",
+    "@fontsource/inter": "4.5.15",
     "@supabase/supabase-js": "2.4.1",
     "astro": "2.0.1",
     "autoprefixer": "10.4.13",

@@ -1,3 +1,7 @@
+---
+import '@fontsource/inter'
+---
+
 <html lang='en'>
   <head>
     <meta charset='UTF-8' />
@@ -10,7 +14,16 @@
     <meta name='theme-color' content='#0d1117' />
     <link rel='icon' href='/favicon.svg' type='image/svg+xml' />
     <!-- TODO: add more metatags for social media -->
+    <style>
+      body {
+        font-family: 'Inter', sans-serif;
+        font-weight: normal;
+        font-style: normal;
+        font-display: optional;
+      }
+    </style>
   </head>
+
   <body>
     <slot />
   </body>
