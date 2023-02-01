@@ -7,7 +7,7 @@ export function GrammarFix() {
   const [loading, setLoading] = useState<boolean>(false)
 
   return (
-    <div class='grid grid-cols-2 h-full'>
+    <div class='grid grid-cols-1 md:grid-cols-2 h-full'>
       <div class='w-full flex flex-col'>
         <div class='mb-10'>
           <input
@@ -24,10 +24,10 @@ export function GrammarFix() {
       </div>
       <aside class='w-full'>
         <div class='flex flex-col h-full'>
-          <div class='mb-10'>
+          <div class='mb-2 md:mb-10'>
             <span class='font-bold text-white text-base sm:text-lg'>Suggestions</span>
           </div>
-          <div class='h-full mb-8'>
+          <div class='h-full mb-12 md:mb-8'>
             {loading && <span class='text-white font-semibold text-xl'>Loading results</span>}
             {outputValue ? (
               <p class='text-lg sm:text-xl text-white' id='grammarOutput'>

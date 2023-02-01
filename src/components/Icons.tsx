@@ -1,7 +1,7 @@
 export function SearchingIc() {
   return (
     <svg
-      class='animated h-96 w-96'
+      class='animated h-72 w-72 md:h-96 md:w-96'
       id='freepik_stories-file-searching'
       xmlns='http://www.w3.org/2000/svg'
       viewBox='0 0 500 500'
