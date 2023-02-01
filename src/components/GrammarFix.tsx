@@ -37,10 +37,10 @@ export function GrammarFix({ isLoading }) {
           <div class='h-2/5 flex flex-col gap-4'>
             <span class='font-bold text-white text-base sm:text-lg'>Synonyms</span>
             <div class='flex flex-wrap gap-3'>
-              <button class='py-1.5 px-8 text-white rounded-full font-semibold transition ease-in-out delay-75 bg-blue-500 hover:-translate-y-1 hover:scale-110 hover:bg-green-500 duration-300'>
+              <button class='text-sm sm:text-base py-1 sm:py-1.5 px-6 sm:px-8 text-white rounded-full font-semibold transition ease-in-out delay-75 bg-blue-500 hover:-translate-y-1 hover:scale-110 hover:bg-green-500 duration-300'>
                 home
               </button>
-              <button class='py-1.5 px-8 text-white rounded-full font-semibold transition ease-in-out delay-75 bg-blue-500 hover:-translate-y-1 hover:scale-110 hover:bg-green-500 duration-300'>
+              <button class='text-sm sm:text-base py-1 sm:py-1.5 px-6 sm:px-8 text-white rounded-full font-semibold transition ease-in-out delay-75 bg-blue-500 hover:-translate-y-1 hover:scale-110 hover:bg-green-500 duration-300'>
                 house
               </button>
             </div>
