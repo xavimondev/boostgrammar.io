@@ -2,9 +2,9 @@ import { useState } from 'preact/hooks'
 import { UserInput } from './UserInput'
 import { WaitingData } from './WaitingData'
 
-export function GrammarFix() {
+export function GrammarFix({ isLoading }) {
   const [outputValue, setOutputValue] = useState<string>('')
-  const [loading, setLoading] = useState<boolean>(false)
+  const setLoading = (isLoadingValue: boolean) => (isLoading.value = isLoadingValue)
 
   return (
     <div class='grid grid-cols-1 md:grid-cols-2 h-full'>
@@ -28,7 +28,6 @@ export function GrammarFix() {
             <span class='font-bold text-white text-base sm:text-lg'>Suggestions</span>
           </div>
           <div class='h-full mb-12 md:mb-8'>
-            {loading && <span class='text-white font-semibold text-xl'>Loading results</span>}
             {outputValue ? (
               <p class='text-lg sm:text-xl text-white' id='grammarOutput'>
                 {outputValue}

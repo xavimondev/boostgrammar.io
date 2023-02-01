@@ -4,7 +4,7 @@ import { getCorrectionFromInput } from '@services/grammar'
 
 type UserInputProps = {
   updateOutputValue: StateUpdater<string>
-  setLoading: StateUpdater<boolean>
+  setLoading: (loadingValue: boolean) => void
 }
 
 export function UserInput({ updateOutputValue, setLoading }: UserInputProps) {
@@ -17,14 +17,17 @@ export function UserInput({ updateOutputValue, setLoading }: UserInputProps) {
       })
       setLoading(false)
       updateOutputValue(correctionValue)
-    }, 150),
+    }, 200),
     []
   )
 
   const handleInputChange = (e: any) => {
     e.preventDefault()
     const inputValue = e.target.value
-    if (inputValue === '') return
+    if (inputValue === '') {
+      updateOutputValue('')
+      return
+    }
     // trigger debounce
     setLoading(true)
     autoCompleteDebounce(inputValue)

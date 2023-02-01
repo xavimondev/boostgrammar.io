@@ -1,44 +1,51 @@
 ---
+import { signal } from '@preact/signals'
 import Layout from '@layouts/base.astro'
 import { GrammarFix } from '@components/GrammarFix'
+import { LoadingIndicator } from '@components/LoadingIndicator'
+
+const isLoading = signal(false)
 ---
 
 <Layout>
-  <nav class='sticky top-0 px-5 md:px-12 bg-gray-900'>
-    <div class='flex h-16 items-center justify-between'>
-      <a class='text-xl text-white flex items-center gap-1' href='/dashboard'>
-        <svg class='h-6 w-6' viewBox='0 0 21 21' width='21' xmlns='http://www.w3.org/2000/svg'
-          ><g
-            fill='none'
-            fill-rule='evenodd'
-            stroke='currentColor'
-            stroke-linecap='round'
-            stroke-linejoin='round'
-            transform='translate(3 6)'
+  <div class='flex flex-col sticky sm:relative top-0'>
+    <nav class='px-5 md:px-12 bg-gray-900'>
+      <div class='flex h-16 items-center justify-between'>
+        <a class='text-xl text-white flex items-center gap-1' href='/dashboard'>
+          <svg class='h-6 w-6' viewBox='0 0 21 21' width='21' xmlns='http://www.w3.org/2000/svg'
+            ><g
+              fill='none'
+              fill-rule='evenodd'
+              stroke='currentColor'
+              stroke-linecap='round'
+              stroke-linejoin='round'
+              transform='translate(3 6)'
+            >
+              <path d='m4.499.497-3.999 4.002 4 4.001'></path><path d='m13.5 4.5h-13'></path>
+            </g>
+          </svg>
+          <span class='text-base hidden sm:block font-semibold'>All Documents</span>
+        </a>
+        <div class='flex flex-row justify-center items-center gap-6'>
+          <button
+            id='save'
+            class='rounded-full py-2 px-0.5 text-white text-sm bg-gradient-to-r from-[#7debf2] to-[#60a4ff]'
           >
-            <path d='m4.499.497-3.999 4.002 4 4.001'></path><path d='m13.5 4.5h-13'></path>
-          </g>
-        </svg>
-        <span class='text-base hidden sm:block font-semibold'>All Documents</span>
-      </a>
-      <div class='flex flex-row justify-center items-center gap-6'>
-        <button
-          id='save'
-          class='rounded-full py-2 px-0.5 text-white text-sm bg-gradient-to-r from-[#7debf2] to-[#60a4ff]'
-        >
-          <span class='py-2 px-7 rounded-full bg-[#0d1117]'>Save</span>
-        </button>
-        <button
-          class='rounded-full py-2 px-0.5 text-white text-sm bg-gradient-to-r from-[#7debf2] to-[#60a4ff]'
-        >
-          <span class='py-2 px-7 rounded-full bg-[#0d1117]'>Cancel</span>
-        </button>
+            <span class='py-2 px-7 rounded-full bg-[#0d1117]'>Save</span>
+          </button>
+          <button
+            class='rounded-full py-2 px-0.5 text-white text-sm bg-gradient-to-r from-[#7debf2] to-[#60a4ff]'
+          >
+            <span class='py-2 px-7 rounded-full bg-[#0d1117]'>Cancel</span>
+          </button>
+        </div>
       </div>
-    </div>
-  </nav>
+    </nav>
+    <LoadingIndicator isLoading={isLoading} client:visible />
+  </div>
   <!-- grid-cols-1 md:grid-cols-3 -->
   <main class='bg-[#0d1117] px-5 md:px-12 pt-10 min-h-screen'>
-    <GrammarFix client:load />
+    <GrammarFix client:load isLoading={isLoading} />
   </main>
 
   <script type='module'>
