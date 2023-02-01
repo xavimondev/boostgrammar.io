@@ -23,11 +23,9 @@ export function GrammarFix({ isLoading }) {
         </div>
       </div>
       <aside class='w-full'>
-        <div class='flex flex-col h-full'>
-          <div class='mb-2 md:mb-10'>
-            <span class='font-bold text-white text-base sm:text-lg'>Suggestions</span>
-          </div>
-          <div class='h-full mb-12 md:mb-8'>
+        <div class='flex flex-col h-full gap-4'>
+          <span class='font-bold text-white text-base sm:text-lg'>Suggestions</span>
+          <div class='h-3/5 overflow-y-auto'>
             {outputValue ? (
               <p class='text-lg sm:text-xl text-white' id='grammarOutput'>
                 {outputValue}
@@ -36,7 +34,7 @@ export function GrammarFix({ isLoading }) {
               <WaitingData />
             )}
           </div>
-          <div class='h-full flex flex-col gap-4'>
+          <div class='h-2/5 flex flex-col gap-4'>
             <span class='font-bold text-white text-base sm:text-lg'>Synonyms</span>
             <div class='flex flex-wrap gap-3'>
               <button class='py-1.5 px-8 text-white rounded-full font-semibold transition ease-in-out delay-75 bg-blue-500 hover:-translate-y-1 hover:scale-110 hover:bg-green-500 duration-300'>

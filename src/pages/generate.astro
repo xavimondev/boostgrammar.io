@@ -44,7 +44,7 @@ const isLoading = signal(false)
     <LoadingIndicator isLoading={isLoading} client:visible />
   </div>
   <!-- grid-cols-1 md:grid-cols-3 -->
-  <main class='bg-[#0d1117] px-5 md:px-12 pt-10 min-h-screen'>
+  <main class='bg-[#0d1117] px-5 md:px-12 pt-10 h-screen fixed w-full'>
     <GrammarFix client:load isLoading={isLoading} />
   </main>
 
