@@ -108,7 +108,6 @@ export function GrammarFix({ isLoading, totalWords }) {
           </div>
         </aside>
       </div>
-      <wc-toast position='top-center'></wc-toast>
     </>
   )
 }
