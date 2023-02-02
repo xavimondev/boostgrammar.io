@@ -15,11 +15,10 @@ const transformStringArrayToString = (arrayString: string[]) => {
   return arrayString.join(' ').trim()
 }
 
-export function GrammarFix({ isLoading }) {
+export function GrammarFix({ isLoading, totalWords }) {
   const [outputValue, setOutputValue] = useState<string[]>([])
   const setLoading = (isLoadingValue: boolean) => (isLoading.value = isLoadingValue)
   const hasResults = outputValue.length > 0
-
   return (
     <>
       <div class='grid grid-cols-1 md:grid-cols-2 h-full'>
@@ -34,7 +33,11 @@ export function GrammarFix({ isLoading }) {
             />
           </div>
           <div class='h-full'>
-            <UserInput updateOutputValue={setOutputValue} setLoading={setLoading} />
+            <UserInput
+              updateOutputValue={setOutputValue}
+              setLoading={setLoading}
+              totalWords={totalWords}
+            />
           </div>
         </div>
         <aside class='w-full'>

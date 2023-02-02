@@ -3,8 +3,10 @@ import { signal } from '@preact/signals'
 import Layout from '@layouts/base.astro'
 import { GrammarFix } from '@components/GrammarFix'
 import { LoadingIndicator } from '@components/LoadingIndicator'
+import { BottomBar } from '@components/BottomBar'
 
 const isLoading = signal(false)
+const totalWords = signal(0)
 ---
 
 <Layout>
@@ -40,9 +42,9 @@ const isLoading = signal(false)
   </div>
   <!-- grid-cols-1 md:grid-cols-3 -->
   <main class='bg-[#0d1117] px-5 md:px-12 pt-10 h-screen fixed w-full'>
-    <GrammarFix client:load isLoading={isLoading} />
+    <GrammarFix client:load isLoading={isLoading} totalWords={totalWords} />
   </main>
-
+  <BottomBar totalWords={totalWords} client:visible />
   <script type='module'>
     import { saveDocument } from './src/services/document'
 
