@@ -5,6 +5,8 @@ import { WaitingData } from './WaitingData'
 import { WordOutput } from './WordOutput'
 
 const synonyms = signal<string[]>([])
+const wordSelected = signal<string>('')
+const isLoadingSynonyms = signal<boolean>(false)
 
 export function GrammarFix({ isLoading }) {
   const [outputValue, setOutputValue] = useState<string[]>([])
@@ -33,7 +35,12 @@ export function GrammarFix({ isLoading }) {
             {outputValue.length > 0 ? (
               <div class='flex gap-1 flex-wrap'>
                 {outputValue.map((word) => (
-                  <WordOutput word={word} synonyms={synonyms} />
+                  <WordOutput
+                    word={word}
+                    synonyms={synonyms}
+                    wordSelected={wordSelected}
+                    isLoadingSynonyms={isLoadingSynonyms}
+                  />
                 ))}
               </div>
             ) : (
@@ -43,6 +50,7 @@ export function GrammarFix({ isLoading }) {
           <div class='h-2/5 flex flex-col gap-4'>
             <span class='font-bold text-white text-base sm:text-lg'>Synonyms</span>
             <div class='flex flex-wrap gap-3'>
+              {/* TODO: Add component synonyms */}
               {synonyms.value.length > 0 ? (
                 <>
                   {synonyms.value.map((syn: string) => (
@@ -51,10 +59,23 @@ export function GrammarFix({ isLoading }) {
                     </button>
                   ))}
                 </>
-              ) : (
-                <p>
-                  No synonyms for <span class='bold'>to</span> found
+              ) : null}
+              {/* TODO: Add component while is rendering */}
+              {!isLoadingSynonyms.value &&
+              synonyms.value.length === 0 &&
+              wordSelected.value !== '' ? (
+                <p class='text-gray-400 text-sm sm:text-base'>
+                  No synonyms for <span class='font-bold'>to</span> found
                 </p>
+              ) : null}
+
+              {wordSelected.value === '' && (
+                <span class='text-gray-400 text-base sm:text-lg'>
+                  Select a word to see its <span class='font-bold'>synonyms</span>
+                </span>
+              )}
+              {isLoadingSynonyms.value && wordSelected.value !== '' && (
+                <p class='text-base sm:text-lg font-bold'>Loading...</p>
               )}
             </div>
           </div>
