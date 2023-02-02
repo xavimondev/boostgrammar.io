@@ -1,16 +1,23 @@
 import { useState } from 'preact/hooks'
 import { signal } from '@preact/signals'
+import { copyTextToClipboard } from '@utils/copyClipboard'
 import { UserInput } from './UserInput'
 import { WaitingData } from './WaitingData'
 import { WordOutput } from './WordOutput'
+import { CopyToClipboardIc } from './Icons'
 
 const synonyms = signal<string[]>([])
 const wordSelected = signal<string>('')
 const isLoadingSynonyms = signal<boolean>(false)
 
+const transformStringArrayToString = (arrayString: string[]) => {
+  return arrayString.join(' ').trim()
+}
+
 export function GrammarFix({ isLoading }) {
   const [outputValue, setOutputValue] = useState<string[]>([])
   const setLoading = (isLoadingValue: boolean) => (isLoading.value = isLoadingValue)
+  const hasResults = outputValue.length > 0
 
   return (
     <div class='grid grid-cols-1 md:grid-cols-2 h-full'>
@@ -30,9 +37,22 @@ export function GrammarFix({ isLoading }) {
       </div>
       <aside class='w-full'>
         <div class='flex flex-col h-full gap-4'>
-          <span class='font-bold text-white text-base sm:text-lg'>Suggestions</span>
+          <div class='flex flex-row justify-between'>
+            <span class='font-bold text-white text-base sm:text-lg'>Suggestions</span>
+            <button
+              disabled={!hasResults}
+              onClick={async () => {
+                const text = transformStringArrayToString(outputValue)
+                await copyTextToClipboard(text)
+              }}
+            >
+              <CopyToClipboardIc
+                class={`h-8 w-8 ${hasResults ? 'text-white' : 'text-gray-500'} items-center`}
+              />
+            </button>
+          </div>
           <div class='h-3/5 overflow-y-auto'>
-            {outputValue.length > 0 ? (
+            {hasResults ? (
               <div class='flex gap-1 flex-wrap'>
                 {outputValue.map((word) => (
                   <WordOutput
