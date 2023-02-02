@@ -1,9 +1,13 @@
 import { useState } from 'preact/hooks'
+import { signal } from '@preact/signals'
 import { UserInput } from './UserInput'
 import { WaitingData } from './WaitingData'
+import { WordOutput } from './WordOutput'
+
+const synonyms = signal<string[]>([])
 
 export function GrammarFix({ isLoading }) {
-  const [outputValue, setOutputValue] = useState<string>('')
+  const [outputValue, setOutputValue] = useState<string[]>([])
   const setLoading = (isLoadingValue: boolean) => (isLoading.value = isLoadingValue)
 
   return (
@@ -26,10 +30,12 @@ export function GrammarFix({ isLoading }) {
         <div class='flex flex-col h-full gap-4'>
           <span class='font-bold text-white text-base sm:text-lg'>Suggestions</span>
           <div class='h-3/5 overflow-y-auto'>
-            {outputValue ? (
-              <p class='text-lg sm:text-xl text-white' id='grammarOutput'>
-                {outputValue}
-              </p>
+            {outputValue.length > 0 ? (
+              <div class='flex gap-1 flex-wrap'>
+                {outputValue.map((word) => (
+                  <WordOutput word={word} synonyms={synonyms} />
+                ))}
+              </div>
             ) : (
               <WaitingData />
             )}
@@ -37,12 +43,19 @@ export function GrammarFix({ isLoading }) {
           <div class='h-2/5 flex flex-col gap-4'>
             <span class='font-bold text-white text-base sm:text-lg'>Synonyms</span>
             <div class='flex flex-wrap gap-3'>
-              <button class='text-sm sm:text-base py-1 sm:py-1.5 px-6 sm:px-8 text-white rounded-full font-semibold transition ease-in-out delay-75 bg-blue-500 hover:-translate-y-1 hover:scale-110 hover:bg-green-500 duration-300'>
-                home
-              </button>
-              <button class='text-sm sm:text-base py-1 sm:py-1.5 px-6 sm:px-8 text-white rounded-full font-semibold transition ease-in-out delay-75 bg-blue-500 hover:-translate-y-1 hover:scale-110 hover:bg-green-500 duration-300'>
-                house
-              </button>
+              {synonyms.value.length > 0 ? (
+                <>
+                  {synonyms.value.map((syn: string) => (
+                    <button class='text-sm sm:text-base py-1 sm:py-1.5 px-6 sm:px-8 text-white rounded-full font-semibold transition ease-in-out delay-75 bg-blue-500 hover:-translate-y-1 hover:scale-110 hover:bg-green-500 duration-300'>
+                      {syn}
+                    </button>
+                  ))}
+                </>
+              ) : (
+                <p>
+                  No synonyms for <span class='bold'>to</span> found
+                </p>
+              )}
             </div>
           </div>
         </div>

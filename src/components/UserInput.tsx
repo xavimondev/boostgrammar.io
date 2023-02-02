@@ -3,7 +3,7 @@ import debounce from 'just-debounce-it'
 import { getCorrectionFromInput } from '@services/grammar'
 
 type UserInputProps = {
-  updateOutputValue: StateUpdater<string>
+  updateOutputValue: StateUpdater<string[]>
   setLoading: (loadingValue: boolean) => void
 }
 
@@ -16,7 +16,7 @@ export function UserInput({ updateOutputValue, setLoading }: UserInputProps) {
         correctionValue
       })
       setLoading(false)
-      updateOutputValue(correctionValue)
+      updateOutputValue(correctionValue.split(' '))
     }, 200),
     []
   )
@@ -25,7 +25,7 @@ export function UserInput({ updateOutputValue, setLoading }: UserInputProps) {
     e.preventDefault()
     const inputValue = e.target.value
     if (inputValue === '') {
-      updateOutputValue('')
+      updateOutputValue([])
       return
     }
     // trigger debounce
