@@ -11,7 +11,7 @@ type UserInputProps = {
 export function UserInput({ updateOutputValue, setLoading, totalWords }: UserInputProps) {
   const autoCompleteDebounce = useCallback(
     debounce(async (inputValue: string) => {
-      totalWords.value = inputValue.length
+      totalWords.value = inputValue.trim().replaceAll(' ', '').length
       const correctionValue = await getCorrectionFromInput(inputValue)
       console.log({
         inputValue,
