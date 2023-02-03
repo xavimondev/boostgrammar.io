@@ -42,7 +42,7 @@ export function GrammarFix({ isLoading, totalWords }) {
         </div>
         <aside class='w-full'>
           <div class='flex flex-col h-full gap-4'>
-            <div class='flex flex-row justify-between'>
+            <div class='flex flex-row justify-between mb-4'>
               <span class='font-bold text-white text-base sm:text-lg'>Suggestions</span>
               <button
                 disabled={!hasResults}
