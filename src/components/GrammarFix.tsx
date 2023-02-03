@@ -49,7 +49,7 @@ export function GrammarFix({ isLoading, totalWords }) {
                 onClick={async () => {
                   const text = transformStringArrayToString(outputValue)
                   await copyTextToClipboard(text)
-                  notify('Text copied')
+                  notify('success', 'Text copied')
                 }}
               >
                 <CopyToClipboardIc
