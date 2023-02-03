@@ -46,6 +46,7 @@ const totalWords = signal(0)
   </main>
   <BottomBar totalWords={totalWords} client:visible />
   <script type='module'>
+    import { notify } from './src/utils/toast'
     import { saveDocument } from './src/services/document'
 
     const newDocument = async () => {
@@ -67,7 +68,7 @@ const totalWords = signal(0)
         totalMistakes
       }
 
-      await saveDocument(doc)
+      notify('promise', 'Document saved', saveDocument(doc))
     }
 
     const validateData = (userInput, grammarOutput) => {
