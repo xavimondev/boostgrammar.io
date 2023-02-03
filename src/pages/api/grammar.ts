@@ -1,13 +1,12 @@
 import { APIRoute } from 'astro'
-import cohere from 'cohere-ai'
 
 import { PROMPT_EXAMPLES } from 'src/utils/constants'
 
-cohere.init(import.meta.env.COHERE_API_KEY)
+const COHERE_API_GENERATE_URL = 'https://api.cohere.ai/generate'
 
 export const post: APIRoute = async ({ request }) => {
   const { input } = await request.json()
-  const response = await cohere.generate({
+  const data = {
     model: 'xlarge',
     prompt: `${PROMPT_EXAMPLES}
     Incorrect sample:${input}
@@ -20,11 +19,19 @@ export const post: APIRoute = async ({ request }) => {
     presence_penalty: 0,
     stop_sequences: ['--'],
     return_likelihoods: 'NONE'
+  }
+
+  const requestCohere = await fetch(COHERE_API_GENERATE_URL, {
+    method: 'POST',
+    headers: {
+      Authorization: `BEARER ${import.meta.env.COHERE_API_KEY}`,
+      'Content-Type': 'application/json',
+      'Cohere-Version': '2022-12-06'
+    },
+    body: JSON.stringify(data)
   })
-
-  const { generations } = response.body
-  const { text } = generations[0]
-
+  const response = await requestCohere.json()
+  const { text } = response.generations[0]
   const textOutput = text.replace('--', '').replaceAll('"', '').trim()
   return new Response(
     JSON.stringify({
