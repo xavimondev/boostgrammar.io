@@ -15,7 +15,7 @@
     "prettier:fix": "npx prettier . --write"
   },
   "dependencies": {
-    "@astrojs/netlify": "^2.1.1",
+    "@astrojs/cloudflare": "6.1.1",
     "@astrojs/preact": "2.0.0",
     "@astrojs/tailwind": "3.0.0",
     "@fontsource/inter": "4.5.15",
