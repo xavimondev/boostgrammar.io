@@ -32,7 +32,11 @@ const start = async () => {
   try {
     await server.register(fastifyEnv, optionsConf)
     await server.ready()
-    await server.listen({ port: 3001 })
+    await server.listen({
+      host: '0.0.0.0',
+      port: 3001
+    })
+    console.log('Running server 🚀')
   } catch (err) {
     server.log.error(err)
     process.exit(1)
