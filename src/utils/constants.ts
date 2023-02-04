@@ -35,3 +35,5 @@ Correct sample: "I need to eat an apple"
 --
 Incorrect sample: "hello i'm xavi from peru"
 Correct sample: "Hello I'm Xavi from Peru"`
+
+export const SERVER = import.meta.env.MODE === 'development' ? 'http://localhost:3001' : ''
