@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "build": "npm install",
-    "dev": "node ./index.js"
+    "start": "node ./index.js"
   },
   "keywords": [],
   "author": "xavimon",

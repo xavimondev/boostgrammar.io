@@ -39,6 +39,10 @@ const start = async () => {
   }
 }
 
+server.get('/', async (request, reply) => {
+  return { hello: 'world' }
+})
+
 // Declare a route
 server.route({
   method: 'GET',
