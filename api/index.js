@@ -11,15 +11,20 @@ await server.register(cors, {
 
 const schema = {
   type: 'object',
-  required: ['RAPID_API_KEY'],
+  required: ['RAPID_API_KEY', 'PORT'],
   properties: {
     RAPID_API_KEY: {
       type: 'string',
       default: ''
+    },
+    PORT: {
+      type: 'number',
+      default: 3000
     }
   }
 }
-const ENV_PATH = path.join(process.cwd(), 'api/.env')
+const ENV_PATH = path.join(process.cwd(), '.env')
+
 const optionsConf = {
   schema,
   dotenv: {
@@ -34,7 +39,7 @@ const start = async () => {
     await server.ready()
     await server.listen({
       host: '0.0.0.0',
-      port: 3001
+      port: process.env.PORT
     })
     console.log('Running server 🚀')
   } catch (err) {
