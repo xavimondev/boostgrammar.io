@@ -1,5 +1,7 @@
+import { SERVER } from '@utils/constants'
+
 export const getCorrectionFromInput = async (input: string) => {
-  const response = await fetch('/api/grammar', {
+  const response = await fetch(`${SERVER}/grammar`, {
     method: 'POST',
     body: JSON.stringify({
       input
