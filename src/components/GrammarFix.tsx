@@ -1,26 +1,40 @@
-import { useState } from 'preact/hooks'
+import { useRef, useState } from 'preact/hooks'
 import { signal } from '@preact/signals'
 import { copyTextToClipboard } from '@utils/copyClipboard'
 import { notify } from '@utils/toast'
+import { useOnClickOutside } from 'src/hooks/useOnClickOutSide'
+import { PopoverCoordinates } from '../types'
 import { UserInput } from './UserInput'
 import { WaitingData } from './WaitingData'
 import { WordOutput } from './WordOutput'
 import { CopyToClipboardIc } from './Icons'
 import { FunFactsEnglish } from './FunFactsEnglish'
+import { PopoverSynonyms } from './PopoverSynonyms'
 
 const synonyms = signal<string[]>([])
 const wordSelected = signal<string>('')
 const isLoadingSynonyms = signal<boolean>(false)
 const isLoading = signal(false)
-
+const popoverCoordinates = signal<PopoverCoordinates>({
+  top: 0,
+  left: 0
+})
 const transformStringArrayToString = (arrayString: string[]) => {
   return arrayString.join(' ').trim()
 }
+const isOpen = signal<boolean>(false)
 
 export function GrammarFix({ totalWords }) {
   const [outputValue, setOutputValue] = useState<string[]>([])
+  const popoverRef = useRef<HTMLDivElement>(undefined)
+
   const setLoading = (isLoadingValue: boolean) => (isLoading.value = isLoadingValue)
   const hasResults = outputValue.length > 0
+
+  useOnClickOutside(popoverRef, () => {
+    isOpen.value = false
+  })
+
   return (
     <>
       <div class='flex flex-col md:flex-row gap-8 sm:gap-4 w-full h-full'>
@@ -42,7 +56,7 @@ export function GrammarFix({ totalWords }) {
                 totalWords={totalWords}
               />
             </div>
-            <div class='flex flex-col gap-2 h-1/2 w-full'>
+            <div class='flex flex-col gap-2 h-1/2 w-full relative'>
               <div class='flex flex-row justify-between w-full'>
                 <span class='font-bold text-white text-lg sm:text-xl'>Output</span>
                 <button
@@ -64,14 +78,43 @@ export function GrammarFix({ totalWords }) {
                     <WordOutput
                       word={word}
                       synonyms={synonyms}
-                      wordSelected={wordSelected}
-                      isLoadingSynonyms={isLoadingSynonyms}
+                      setWordSelected={(word: string) => (wordSelected.value = word)}
+                      setIsLoadingSynonyms={() =>
+                        (isLoadingSynonyms.value = !isLoadingSynonyms.value)
+                      }
+                      setPopoverCoordinates={(coordinates: PopoverCoordinates) => {
+                        popoverCoordinates.value = coordinates
+                      }}
+                      openPopover={() => (isOpen.value = true)}
                     />
                   ))}
                 </div>
               ) : null}
               {!isLoading.value && !hasResults && <WaitingData />}
               {isLoading.value && <FunFactsEnglish />}
+              {isOpen.value && (
+                <PopoverSynonyms coordinates={popoverCoordinates.value} popoverRef={popoverRef}>
+                  {synonyms.value.length > 0
+                    ? synonyms.value.map((syn: string) => (
+                        <button class='text-sm sm:text-base font-bold py-1 px-6 sm:px-8 bg-blue-100 text-blue-800 rounded-lg hover:bg-green-500 hover:text-white'>
+                          {syn}
+                        </button>
+                      ))
+                    : null}
+                  {/* Loading synonyms */}
+                  {isLoadingSynonyms.value && (
+                    <p class='text-base sm:text-base text-gray-500 font-bold'>Loading...</p>
+                  )}
+                  {/* If word does not have synonyms, we show this message */}
+                  {!isLoadingSynonyms.value &&
+                  synonyms.value.length === 0 &&
+                  wordSelected.value !== '' ? (
+                    <p class='text-black text-sm sm:text-base'>
+                      No synonyms for <span class='font-extrabold'>{wordSelected.value}</span> found
+                    </p>
+                  ) : null}
+                </PopoverSynonyms>
+              )}
             </div>
           </div>
         </div>
@@ -79,7 +122,7 @@ export function GrammarFix({ totalWords }) {
           <div class='flex flex-col h-full gap-4'>
             <span class='font-bold text-white text-lg sm:text-xl'>Results</span>
             {/* Results component */}
-            <div class='flex flex-wrap gap-8 justify-center'>
+            <div class='flex gap-8 justify-center'>
               <div class='flex flex-col gap-0.5 items-center'>
                 <span class='font-bold text-base sm:text-4xl text-green-400'>WORDS</span>
                 <span class='font-semibold text-sm sm:text-5xl text-green-400'>
@@ -93,40 +136,10 @@ export function GrammarFix({ totalWords }) {
                 </span>
               </div>
             </div>
+
             {/* Text animation typing saying something like: Here are your mistakes */}
             {/* I need to show words that are not in ouput and highlight them */}
             {/* If user does not have mistakes, app will show an animation with check icon saying everything is ok */}
-            {/* TODO: Add component synonyms */}
-            {/* {synonyms.value.length > 0 ? (
-                <>
-                  {synonyms.value.map((syn: string) => (
-                    <button class='text-sm sm:text-base py-1 sm:py-1.5 px-6 sm:px-8 text-white rounded-full font-semibold transition ease-in-out delay-75 bg-blue-500 hover:-translate-y-1 hover:scale-110 hover:bg-green-500 duration-300'>
-                      {syn}
-                    </button>
-                  ))}
-                </>
-              ) : null} */}
-            {/* Validation for synonyms */}
-            {/* {!isLoadingSynonyms.value &&
-              synonyms.value.length === 0 &&
-              wordSelected.value !== '' ? (
-                <p class='text-gray-400 text-sm sm:text-base'>
-                  No synonyms for <span class='font-bold'>to</span> found
-                </p>
-              ) : null} */}
-
-            {/* 
-              SYNONYMS VALIDATION
-              {wordSelected.value === '' && (
-                <span class='text-gray-400 text-base sm:text-lg'>
-                  Select a word to see its <span class='font-bold'>synonyms</span>
-                </span>
-              )} */}
-            {/* 
-              Loading synonyms
-              {isLoadingSynonyms.value && wordSelected.value !== '' && (
-                <p class='text-base sm:text-lg font-bold'>Loading...</p>
-              )} */}
           </div>
         </aside>
       </div>
