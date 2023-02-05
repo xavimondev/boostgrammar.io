@@ -23,8 +23,9 @@ const transformStringArrayToString = (arrayString: string[]) => {
   return arrayString.join(' ').trim()
 }
 const isOpen = signal<boolean>(false)
+const totalWords = signal<number>(0)
 
-export function GrammarFix({ totalWords }) {
+export function GrammarFix() {
   const [outputValue, setOutputValue] = useState<string[]>([])
   const popoverRef = useRef<HTMLDivElement>(undefined)
 
