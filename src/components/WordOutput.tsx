@@ -11,7 +11,7 @@ type WordOutputProps = {
 export function WordOutput({ word, synonyms, wordSelected, isLoadingSynonyms }: WordOutputProps) {
   return (
     <span
-      class='text-lg sm:text-xl text-white'
+      class='text-base sm:text-lg text-white'
       id='grammarOutput'
       onDblClick={async () => {
         wordSelected.value = word
