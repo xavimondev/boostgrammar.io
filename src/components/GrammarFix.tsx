@@ -54,7 +54,7 @@ export function GrammarFix() {
               <UserInput
                 updateOutputValue={setOutputValue}
                 setLoading={setLoading}
-                totalWords={totalWords}
+                setTotalWords={(total: number) => (totalWords.value = total)}
               />
             </div>
             <div class='flex flex-col gap-2 h-1/2 w-full relative'>

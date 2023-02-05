@@ -5,13 +5,13 @@ import { getCorrectionFromInput } from '@services/grammar'
 type UserInputProps = {
   updateOutputValue: StateUpdater<string[]>
   setLoading: (loadingValue: boolean) => void
-  totalWords: any
+  setTotalWords: (totalWords: number) => void
 }
 
-export function UserInput({ updateOutputValue, setLoading, totalWords }: UserInputProps) {
+export function UserInput({ updateOutputValue, setLoading, setTotalWords }: UserInputProps) {
   const autoCompleteDebounce = useCallback(
     debounce(async (inputValue: string) => {
-      totalWords.value = inputValue.trim().replaceAll(' ', '').length
+      setTotalWords(inputValue.trim().replaceAll(' ', '').length)
       const correctionValue = await getCorrectionFromInput(inputValue)
       console.log({
         inputValue,
