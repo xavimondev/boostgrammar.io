@@ -6,16 +6,18 @@ import { UserInput } from './UserInput'
 import { WaitingData } from './WaitingData'
 import { WordOutput } from './WordOutput'
 import { CopyToClipboardIc } from './Icons'
+import { FunFactsEnglish } from './FunFactsEnglish'
 
 const synonyms = signal<string[]>([])
 const wordSelected = signal<string>('')
 const isLoadingSynonyms = signal<boolean>(false)
+const isLoading = signal(false)
 
 const transformStringArrayToString = (arrayString: string[]) => {
   return arrayString.join(' ').trim()
 }
 
-export function GrammarFix({ isLoading, totalWords }) {
+export function GrammarFix({ totalWords }) {
   const [outputValue, setOutputValue] = useState<string[]>([])
   const setLoading = (isLoadingValue: boolean) => (isLoading.value = isLoadingValue)
   const hasResults = outputValue.length > 0
@@ -42,7 +44,7 @@ export function GrammarFix({ isLoading, totalWords }) {
             </div>
             <div class='flex flex-col gap-2 h-1/2 w-full'>
               <div class='flex flex-row justify-between w-full'>
-                <span class='font-bold text-white text-base sm:text-lg'>Output</span>
+                <span class='font-bold text-white text-lg sm:text-xl'>Output</span>
                 <button
                   disabled={!hasResults}
                   onClick={async () => {
@@ -56,28 +58,26 @@ export function GrammarFix({ isLoading, totalWords }) {
                   />
                 </button>
               </div>
-              <div class='h-full flex items-center w-full'>
-                {hasResults ? (
-                  <div class='flex gap-1 flex-wrap overflow-y-auto'>
-                    {outputValue.map((word) => (
-                      <WordOutput
-                        word={word}
-                        synonyms={synonyms}
-                        wordSelected={wordSelected}
-                        isLoadingSynonyms={isLoadingSynonyms}
-                      />
-                    ))}
-                  </div>
-                ) : (
-                  <WaitingData />
-                )}
-              </div>
+              {hasResults ? (
+                <div class='flex gap-1 flex-wrap overflow-y-auto w-fu'>
+                  {outputValue.map((word) => (
+                    <WordOutput
+                      word={word}
+                      synonyms={synonyms}
+                      wordSelected={wordSelected}
+                      isLoadingSynonyms={isLoadingSynonyms}
+                    />
+                  ))}
+                </div>
+              ) : null}
+              {!isLoading.value && !hasResults && <WaitingData />}
+              {isLoading.value && <FunFactsEnglish />}
             </div>
           </div>
         </div>
         <aside class='w-full h-full hidden md:block'>
           <div class='flex flex-col h-full gap-4'>
-            <span class='font-bold text-white text-base sm:text-lg'>Results</span>
+            <span class='font-bold text-white text-lg sm:text-xl'>Results</span>
             {/* Results component */}
             <div class='flex flex-wrap gap-8 justify-center'>
               <div class='flex flex-col gap-0.5 items-center'>
