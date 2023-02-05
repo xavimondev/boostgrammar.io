@@ -36,4 +36,20 @@ Incorrect sample: "I need eat apple"
 Correct sample: "I need to eat an apple"
 --
 Incorrect sample: "hello i'm xavi from peru"
-Correct sample: "Hello I'm Xavi from Peru"`
+Correct sample: "Hello I'm Xavi from Peru"
+--
+Incorrect sample: "thinking about you beter performance"
+Correct sample: "Thinking about your better performance"
+--
+Incorrect sample: "I will see you tomorrow, okay?"
+Correct sample: "I will see you tomorrow, okay."
+--
+Incorrect sample: "I didn't seen the movie yet."
+Correct sample: "I haven't seen the movie yet."
+--
+Incorrect sample: "Me and my family had went to the beach for vacation and we was having a great time swimming in the ocean and building sandcastles until it started raining and we had to quickly pack up our stuff and run back to the car."
+Correct sample: "My family and I went to the beach for vacation and we were having a great time swimming in the ocean and building sandcastles until it started raining and we had to quickly pack up our things and run back to the car."
+--
+Incorrect sample: "the teacher told us that we should of studied more for the test because most of the class did poorly on it and it was a shame because she always gives extra credit opportunities for those who need it."
+Correct sample: "The teacher told us that we should have studied more for the test because most of the class did poorly on it, and it was a shame because she always gives extra credit opportunities to those who need it."
+`
