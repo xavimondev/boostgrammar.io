@@ -3,7 +3,6 @@ import { signal } from '@preact/signals'
 import Layout from '@layouts/base.astro'
 import { GrammarFix } from '@components/GrammarFix'
 
-const isLoading = signal(false)
 const totalWords = signal(0)
 ---
 
@@ -39,7 +38,7 @@ const totalWords = signal(0)
   </div>
   <!-- grid-cols-1 md:grid-cols-3 -->
   <main class='bg-[#0d1117] px-5 md:px-12 pt-10 h-screen fixed w-full'>
-    <GrammarFix client:load isLoading={isLoading} totalWords={totalWords} />
+    <GrammarFix client:load totalWords={totalWords} />
   </main>
   <script type='module'>
     import { notify } from './src/utils/toast'
