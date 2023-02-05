@@ -10,7 +10,7 @@ import { WordOutput } from './WordOutput'
 import { CopyToClipboardIc } from './Icons'
 import { FunFactsEnglish } from './FunFactsEnglish'
 import { PopoverSynonyms } from './PopoverSynonyms'
-import { SynonymsList } from './Synonyms'
+import { SynonymsList, SynonymsLoader } from './Synonyms'
 
 const synonyms = signal<string[]>([])
 const wordSelected = signal<string>('')
@@ -97,10 +97,7 @@ export function GrammarFix() {
               {isOpen.value && (
                 <PopoverSynonyms coordinates={popoverCoordinates.value} popoverRef={popoverRef}>
                   <SynonymsList synonyms={synonyms.value} />
-                  {/* Loading synonyms */}
-                  {isLoadingSynonyms.value && (
-                    <p class='text-base sm:text-base text-gray-500 font-bold'>Loading...</p>
-                  )}
+                  {isLoadingSynonyms.value && <SynonymsLoader />}
                   {/* If word does not have synonyms, we show this message */}
                   {!isLoadingSynonyms.value &&
                   synonyms.value.length === 0 &&

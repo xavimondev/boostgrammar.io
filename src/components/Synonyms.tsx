@@ -23,3 +23,7 @@ export function SynonymButton({ synonymValue }: SynonymButtonProps) {
     </button>
   )
 }
+
+export function SynonymsLoader() {
+  return <p class='text-base sm:text-base text-gray-500 font-bold'>Loading...</p>
+}
