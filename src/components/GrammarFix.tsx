@@ -10,6 +10,7 @@ import { WordOutput } from './WordOutput'
 import { CopyToClipboardIc } from './Icons'
 import { FunFactsEnglish } from './FunFactsEnglish'
 import { PopoverSynonyms } from './PopoverSynonyms'
+import { SynonymsList } from './Synonyms'
 
 const synonyms = signal<string[]>([])
 const wordSelected = signal<string>('')
@@ -95,13 +96,7 @@ export function GrammarFix() {
               {isLoading.value && <FunFactsEnglish />}
               {isOpen.value && (
                 <PopoverSynonyms coordinates={popoverCoordinates.value} popoverRef={popoverRef}>
-                  {synonyms.value.length > 0
-                    ? synonyms.value.map((syn: string) => (
-                        <button class='text-sm sm:text-base font-bold py-1 px-6 sm:px-8 bg-blue-100 text-blue-800 rounded-lg hover:bg-green-500 hover:text-white'>
-                          {syn}
-                        </button>
-                      ))
-                    : null}
+                  <SynonymsList synonyms={synonyms.value} />
                   {/* Loading synonyms */}
                   {isLoadingSynonyms.value && (
                     <p class='text-base sm:text-base text-gray-500 font-bold'>Loading...</p>
