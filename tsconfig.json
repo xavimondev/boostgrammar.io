@@ -9,6 +9,8 @@
       "@layouts/*": ["src/layouts/*"],
       "@services/*": ["src/services/*"],
       "@utils/*": ["src/utils/*"],
+      "@lib/*": ["src/lib/*"],
+      "@hooks/*": ["src/hooks/*"]
     }
   }
 }
