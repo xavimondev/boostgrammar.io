@@ -2,6 +2,7 @@ import { useRef, useState } from 'preact/hooks'
 import { signal } from '@preact/signals'
 import { copyTextToClipboard } from '@utils/copyClipboard'
 import { notify } from '@utils/toast'
+import { transformStringArrayToString } from '@utils/arrayToString'
 import { getGrammaticalMistakesFromText } from '@services/grammar'
 import { useOnClickOutside } from 'src/hooks/useOnClickOutSide'
 import { PopoverCoordinates } from '../types'
@@ -23,9 +24,7 @@ const popoverCoordinates = signal<PopoverCoordinates>({
   top: 0,
   left: 0
 })
-const transformStringArrayToString = (arrayString: string[]) => {
-  return arrayString.join(' ').trim()
-}
+
 const isOpen = signal<boolean>(false)
 const totalWords = signal<number>(0)
 const mistakesList = signal([])
