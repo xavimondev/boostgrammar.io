@@ -39,7 +39,12 @@ export function DocumentGenerator() {
             <button
               id='save'
               onClick={newDocument}
-              class='rounded-md py-2 px-5 text-white font-semibold text-sm sm:text-base bg-gradient-to-r from-[#7debf2] to-[#60a4ff]'
+              disabled={!isReadyToSave.value}
+              class={`rounded-md py-2 px-5 text-white font-semibold text-sm sm:text-base ${
+                !isReadyToSave.value
+                  ? 'bg-gray-400'
+                  : 'bg-gradient-to-r from-[#7debf2] to-[#60a4ff]'
+              }`}
             >
               Save
             </button>
