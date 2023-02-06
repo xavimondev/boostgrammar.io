@@ -1,7 +1,6 @@
 ---
 import Layout from '@layouts/base.astro'
 import Navbar from '@components/Navbar.astro'
-import Tabs from '@components/Tabs.astro'
 import DocumentCard from '@components/DocumentCard.astro'
 import { getAllDocuments } from '@services/document'
 
@@ -10,13 +9,25 @@ const { data } = await getAllDocuments()
 
 <Layout>
   <Navbar />
-  <Tabs />
   <main class='min-h-screen bg-[#0d1117] px-5 md:px-12 pt-10'>
     <div
       class='absolute w-full h-0 top-1/2 rounded-3xl shadow-[0_0_150px_300px_rgba(0,99,198,0.15)]'
     >
     </div>
-
+    <div class='mt-1 flex flex-row justify-between items-center mb-4'>
+      <h2 class='text-2xl sm:text-3xl font-bold leading-[1.15] sm:leading-[1.15] text-white/90'>
+        Here are your
+        <span class='text-transparent bg-clip-text bg-gradient-to-r from-[#7debf2] to-[#60a4ff]'>
+          documents
+        </span>
+      </h2>
+      <a
+        href='/generate'
+        class='bg-gradient-to-r from-[#11ccda] to-[#4490f2] py-2 px-3 rounded-md text-white font-semibold mt-2'
+      >
+        New Document
+      </a>
+    </div>
     <div class='grid gap-6 grid-cols-[repeat(auto-fill,minmax(320px,_1fr))]'>
       {data.map((document) => <DocumentCard {...document} />)}
     </div>
