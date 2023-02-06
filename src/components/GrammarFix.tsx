@@ -12,6 +12,7 @@ import { CopyToClipboardIc } from './Icons'
 import { FunFactsEnglish } from './FunFactsEnglish'
 import { PopoverSynonyms } from './PopoverSynonyms'
 import { SynonymsList, SynonymsLoader } from './Synonyms'
+import { IndicatorsList } from './IndicatorsList'
 
 const synonyms = signal<string[]>([])
 const wordSelected = signal<string>('')
@@ -127,21 +128,11 @@ export function GrammarFix() {
         <aside class='w-full h-full hidden md:block'>
           <div class='flex flex-col h-full gap-4'>
             <span class='font-bold text-white text-lg sm:text-xl'>Results</span>
-            {/* Results component */}
-            <div class='flex gap-8 justify-center'>
-              <div class='flex flex-col gap-0.5 items-center'>
-                <span class='font-bold text-base sm:text-4xl text-green-400'>WORDS</span>
-                <span class='font-semibold text-sm sm:text-5xl text-green-400'>
-                  {totalWords.value}
-                </span>
-              </div>
-              <div class='flex flex-col gap-0.5 items-center'>
-                <span class='font-bold text-base sm:text-4xl text-red-400'>MISTAKES</span>
-                <span class='font-semibold text-sm sm:text-5xl text-red-400'>
-                  {totalWords.value}
-                </span>
-              </div>
-            </div>
+            <IndicatorsList
+              totalCharacters={totalWords}
+              totalWords={wordsFromEnteredText.value.length}
+              totalMistakes={wrongWordsFromEnteredText.value.length}
+            />
             <div className='flex flex-col gap-4'>
               {/* List mistakes */}
               {mistakesList.value.map(({ message, categoryIssue, wrongWord, correctionsList }) => (
