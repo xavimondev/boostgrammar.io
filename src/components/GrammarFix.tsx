@@ -3,6 +3,7 @@ import { signal } from '@preact/signals'
 import { copyTextToClipboard } from '@utils/copyClipboard'
 import { notify } from '@utils/toast'
 import { transformStringArrayToString } from '@utils/arrayToString'
+import { saveDocument } from '@services/document'
 import { getGrammaticalMistakesFromText } from '@services/grammar'
 import { useOnClickOutside } from 'src/hooks/useOnClickOutSide'
 import { PopoverCoordinates } from '../types'
@@ -34,6 +35,7 @@ const wrongWordsFromEnteredText = signal<string[]>([])
 export function GrammarFix() {
   const [outputValue, setOutputValue] = useState<string[]>([])
   const popoverRef = useRef<HTMLDivElement>(undefined)
+  const titleRef = useRef<HTMLInputElement>(undefined)
 
   const setLoading = (isLoadingValue: boolean) => (isLoading.value = isLoadingValue)
   const hasResults = outputValue.length > 0
@@ -50,12 +52,34 @@ export function GrammarFix() {
     wrongWordsFromEnteredText.value = wrongWordsList
   }
 
+  const newDocument = async () => {
+    const title = titleRef.current.value || 'Untitled document'
+    const userInput = transformStringArrayToString(wordsFromEnteredText.value)
+    const grammarOutput = transformStringArrayToString(outputValue)
+
+    // if (!validateData(userInput, grammarOutput)) return
+
+    const totalWords = wordsFromEnteredText.value.length
+    const totalMistakes = wrongWordsFromEnteredText.value.length
+
+    const doc = {
+      title,
+      userInput,
+      grammarOutput,
+      totalWords,
+      totalMistakes
+    }
+
+    notify('promise', 'Document saved', saveDocument(doc))
+  }
+
   return (
     <>
       <div class='flex flex-col md:flex-row gap-8 sm:gap-4 w-full h-full'>
         <div class='flex flex-col h-full w-full'>
           <div class='mb-10'>
             <input
+              ref={titleRef}
               id='documentTitle'
               type='text'
               class='bg-[#0d1117] font-bold text-base border-none focus:outline-none text-white w-full'
