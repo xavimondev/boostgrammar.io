@@ -1,9 +1,10 @@
-export function SearchingIc() {
+export function SearchingIc(props) {
   return (
     <svg
       class='animated h-52 w-52 md:h-96 md:w-96'
       xmlns='http://www.w3.org/2000/svg'
       viewBox='0 0 500 500'
+      {...props}
     >
       <g
         id='freepik--background-simple--inject-95'
@@ -1279,7 +1280,7 @@ export function SearchingIc() {
   )
 }
 
-export const CopyToClipboardIc = (props) => {
+export function CopyToClipboardIc(props) {
   return (
     <svg {...props} viewBox='0 0 21 21' width='21' xmlns='http://www.w3.org/2000/svg'>
       <g
