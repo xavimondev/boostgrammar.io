@@ -2,6 +2,7 @@ import { useRef, useState } from 'preact/hooks'
 import { signal } from '@preact/signals'
 import { copyTextToClipboard } from '@utils/copyClipboard'
 import { notify } from '@utils/toast'
+import { getGrammaticalMistakesFromText } from '@services/grammar'
 import { useOnClickOutside } from 'src/hooks/useOnClickOutSide'
 import { PopoverCoordinates } from '../types'
 import { UserInput } from './UserInput'
@@ -25,6 +26,7 @@ const transformStringArrayToString = (arrayString: string[]) => {
 }
 const isOpen = signal<boolean>(false)
 const totalWords = signal<number>(0)
+const mistakesList = signal([])
 
 export function GrammarFix() {
   const [outputValue, setOutputValue] = useState<string[]>([])
@@ -36,6 +38,12 @@ export function GrammarFix() {
   useOnClickOutside(popoverRef, () => {
     isOpen.value = false
   })
+
+  const getMistakesFromText = async (text: string) => {
+    // 'Some people does not wanna to eat meals'
+    const mistakes = await getGrammaticalMistakesFromText(text)
+    mistakesList.value = mistakes
+  }
 
   return (
     <>
@@ -56,6 +64,7 @@ export function GrammarFix() {
                 updateOutputValue={setOutputValue}
                 setLoading={setLoading}
                 setTotalWords={(total: number) => (totalWords.value = total)}
+                getTotalMistakes={(text: string) => getMistakesFromText(text)}
               />
             </div>
             <div class='flex flex-col gap-2 h-1/2 w-full relative'>
@@ -129,9 +138,29 @@ export function GrammarFix() {
                 </span>
               </div>
             </div>
+            <div className='flex flex-col gap-4'>
+              {/* List mistakes */}
+              {mistakesList.value.map(({ message, categoryIssue, wrongWord, correctionsList }) => (
+                <div class='flex flex-col gap-3 rounded-lg bg-white'>
+                  <div class='p-4 flex flex-col gap-4'>
+                    <span class='text-gray-400 uppercase text-sm'>{categoryIssue}</span>
+                    <div class='flex flex-row gap-7 items-center'>
+                      <span class='text-sm sm:text-lg line-through decoration-red-400 after:content-["→"] after:align-middle after:ml-4 after:text-gray-600 after:inline-block'>
+                        {wrongWord}
+                      </span>
+                      <div class='flex flex-row gap-1'>
+                        <button class='text-sm sm:text-base font-bold py-1 px-2 sm:px-4 bg-blue-100 text-blue-800 rounded-lg hover:bg-blue-100'>
+                          {correctionsList.at(0)}
+                        </button>
+                      </div>
+                    </div>
+                    <p class='font-semibold text-base sm:text-base'>{message}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
 
             {/* Text animation typing saying something like: Here are your mistakes */}
-            {/* I need to show words that are not in ouput and highlight them */}
             {/* If user does not have mistakes, app will show an animation with check icon saying everything is ok */}
           </div>
         </aside>
