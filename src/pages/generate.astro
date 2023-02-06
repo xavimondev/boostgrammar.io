@@ -37,39 +37,4 @@ import { GrammarFix } from '@components/GrammarFix'
   <main class='bg-[#0d1117] px-5 md:px-12 pt-10 h-screen fixed w-full'>
     <GrammarFix client:load />
   </main>
-  <script type='module'>
-    import { notify } from './src/utils/toast'
-    import { saveDocument } from './src/services/document'
-
-    const newDocument = async () => {
-      let title = document.querySelector('#documentTitle').value || 'Untitled document'
-      const userInput = document.querySelector('#userInput').value
-      const grammarOutput = document.querySelector('#grammarOutput')?.textContent
-
-      if (!validateData(userInput, grammarOutput)) return
-
-      console.log(validateData(userInput, grammarOutput))
-      const totalWords = userInput.trim().replaceAll(' ', '').length
-      const totalMistakes = 0 // TODO: update totalMistakes
-
-      const doc = {
-        title,
-        userInput,
-        grammarOutput,
-        totalWords,
-        totalMistakes
-      }
-
-      notify('promise', 'Document saved', saveDocument(doc))
-    }
-
-    const validateData = (userInput, grammarOutput) => {
-      return userInput !== '' && grammarOutput !== ''
-    }
-
-    const buttonSave = document.querySelector('#save')
-    buttonSave.addEventListener('click', () => {
-      newDocument()
-    })
-  </script>
 </Layout>
