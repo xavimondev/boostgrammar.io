@@ -145,4 +145,66 @@ server.route({
   }
 })
 
+server.route({
+  method: 'POST',
+  url: '/checking',
+  schema: {
+    response: {
+      200: {
+        type: 'object',
+        properties: {
+          result: {
+            type: 'array'
+          }
+        }
+      }
+    }
+  },
+  handler: async (req, reply) => {
+    const body = req.body
+    const { text } = body
+
+    const encodedParams = new URLSearchParams()
+    encodedParams.append('language', 'en-US')
+    encodedParams.append('text', text)
+
+    const options = {
+      method: 'POST',
+      headers: {
+        'X-RapidAPI-Key': process.env.RAPID_API_KEY,
+        'X-RapidAPI-Host': 'dnaber-languagetool.p.rapidapi.com',
+        'Content-Type': 'application/json'
+      },
+      body: encodedParams
+    }
+
+    const request = await fetch('https://dnaber-languagetool.p.rapidapi.com/v2/check', options)
+    const response = await request.json()
+    const result = response.matches.map(match => {
+      const { message, replacements, offset, length, rule, sentence } = match
+      const correctionsList = replacements.map(rep => rep.value)
+      // const ruleInfo = {
+      //   category: rule.issueType,
+      //   description: rule.description
+      // }
+      const coordinatesIncorrectWord = {
+        startPosition: offset,
+        endPosition: offset + length
+      }
+      const wrongWord = sentence.substr(offset, length)
+
+      return {
+        message,
+        correctionsList,
+        categoryIssue: rule.issueType,
+        wrongWord,
+        coordinatesIncorrectWord
+      }
+    })
+    return {
+      result
+    }
+  }
+})
+
 start()
