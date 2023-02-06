@@ -27,6 +27,8 @@ const transformStringArrayToString = (arrayString: string[]) => {
 const isOpen = signal<boolean>(false)
 const totalWords = signal<number>(0)
 const mistakesList = signal([])
+const wordsFromEnteredText = signal<string[]>([])
+const wrongWordsFromEnteredText = signal<string[]>([])
 
 export function GrammarFix() {
   const [outputValue, setOutputValue] = useState<string[]>([])
@@ -41,8 +43,10 @@ export function GrammarFix() {
 
   const getMistakesFromText = async (text: string) => {
     // 'Some people does not wanna to eat meals'
-    const { result } = await getGrammaticalMistakesFromText(text)
+    const { result, wrongWordsList } = await getGrammaticalMistakesFromText(text)
     mistakesList.value = result
+    wordsFromEnteredText.value = text.split(' ')
+    wrongWordsFromEnteredText.value = wrongWordsList
   }
 
   return (
@@ -159,6 +163,19 @@ export function GrammarFix() {
                 </div>
               ))}
             </div>
+            {/* Highlighting incorrect words */}
+            {wordsFromEnteredText.value.length > 0 ? (
+              <div class='flex flex-row gap-1 flex-wrap items-center'>
+                {wordsFromEnteredText.value.map((word) => {
+                  const isWrong = wrongWordsFromEnteredText.value.indexOf(word) === -1
+                  return (
+                    <div class={`${!isWrong ? 'bg-red-400 rounded-md p-0.5 font-semibold' : ''}`}>
+                      <span class={`text-sm sm:text-base text-white`}>{word}</span>
+                    </div>
+                  )
+                })}
+              </div>
+            ) : null}
 
             {/* Text animation typing saying something like: Here are your mistakes */}
             {/* If user does not have mistakes, app will show an animation with check icon saying everything is ok */}
