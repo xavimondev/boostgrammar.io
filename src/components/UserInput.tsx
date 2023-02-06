@@ -19,10 +19,6 @@ export function UserInput({
     debounce(async (inputValue: string) => {
       setTotalWords(inputValue.trim().replaceAll(' ', '').length)
       const correctionValue = await getCorrectionFromInput(inputValue)
-      console.log({
-        inputValue,
-        correctionValue
-      })
       setLoading(false)
       setOutputValue(correctionValue)
       getTotalMistakes(inputValue)

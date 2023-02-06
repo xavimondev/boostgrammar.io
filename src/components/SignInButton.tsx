@@ -2,8 +2,7 @@ import { signInWithGitHub } from '@services/auth'
 
 export function SignInButton() {
   const handleLogin = async () => {
-    const data = await signInWithGitHub()
-    console.log(data)
+    await signInWithGitHub()
   }
   return (
     <>
