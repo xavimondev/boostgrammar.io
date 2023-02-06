@@ -166,13 +166,13 @@ export function GrammarFix({ documentValues, isReadyToSave }: GrammarFixProps) {
             totalWords={wordsFromEnteredText.value.length}
             totalMistakes={wrongWordsFromEnteredText.value.length}
           />
-          <MistakesList mistakesList={mistakesList.value} />
           {wordsFromEnteredText.value.length > 0 ? (
             <HighlightResult
               wordsFromEnteredText={wordsFromEnteredText.value}
               wrongWordsFromEnteredText={wrongWordsFromEnteredText.value}
             />
           ) : null}
+          <MistakesList mistakesList={mistakesList.value} />
         </ResultsPanel>
       </div>
     </>
