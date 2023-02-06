@@ -1,5 +1,6 @@
 {
-  "name": "@example/basics",
+  "name": "boostgrammar.io",
+  "description": "Improve your grammar skills thanks to IA",
   "type": "module",
   "version": "0.0.1",
   "private": true,
