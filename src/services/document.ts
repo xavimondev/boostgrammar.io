@@ -1,4 +1,4 @@
-import { supabase } from 'src/lib/database'
+import { supabase } from '@lib/database'
 
 interface Document {
   id?: string

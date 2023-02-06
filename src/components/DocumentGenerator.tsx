@@ -1,5 +1,5 @@
 import { signal } from '@preact/signals'
-import { supabase } from 'src/lib/database'
+import { supabase } from '@lib/database'
 import { saveDocument } from '@services/document'
 import { notify } from '@utils/toast'
 import { GrammarFix } from './GrammarFix'
