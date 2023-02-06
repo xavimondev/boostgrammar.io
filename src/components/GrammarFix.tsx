@@ -1,5 +1,5 @@
-import { useRef, useState } from 'preact/hooks'
-import { signal } from '@preact/signals'
+import { useRef } from 'preact/hooks'
+import { signal, computed } from '@preact/signals'
 import { copyTextToClipboard } from '@utils/copyClipboard'
 import { notify } from '@utils/toast'
 import { transformStringArrayToString } from '@utils/arrayToString'
@@ -30,6 +30,11 @@ const totalWords = signal<number>(0)
 const mistakesList = signal([])
 const wordsFromEnteredText = signal<string[]>([])
 const wrongWordsFromEnteredText = signal<string[]>([])
+const outputValue = signal<string>('')
+// When `outputValue` changes, this re-runs automatically:
+const outputValueAsArray = computed(() => {
+  return outputValue.value.length === 0 ? [] : outputValue.value.split(' ')
+})
 
 type GrammarFixProps = {
   documentValues: any
@@ -37,12 +42,11 @@ type GrammarFixProps = {
 }
 
 export function GrammarFix({ documentValues, isReadyToSave }: GrammarFixProps) {
-  const [outputValue, setOutputValue] = useState<string[]>([])
   const popoverRef = useRef<HTMLDivElement>(undefined)
   const titleRef = useRef<HTMLInputElement>(undefined)
 
   const setLoading = (isLoadingValue: boolean) => (isLoading.value = isLoadingValue)
-  const hasResults = outputValue.length > 0
+  const hasResults = outputValue.value !== ''
 
   useOnClickOutside(popoverRef, () => {
     isOpen.value = false
@@ -94,7 +98,7 @@ export function GrammarFix({ documentValues, isReadyToSave }: GrammarFixProps) {
           <div class='flex flex-col gap-2 h-full w-full'>
             <div class='h-1/2'>
               <UserInput
-                updateOutputValue={setOutputValue}
+                setOutputValue={(output: string) => (outputValue.value = output)}
                 setLoading={setLoading}
                 setTotalWords={(total: number) => (totalWords.value = total)}
                 getTotalMistakes={(text: string) => getMistakesFromText(text)}
@@ -106,8 +110,7 @@ export function GrammarFix({ documentValues, isReadyToSave }: GrammarFixProps) {
                 <button
                   disabled={!hasResults}
                   onClick={async () => {
-                    const text = transformStringArrayToString(outputValue)
-                    await copyTextToClipboard(text)
+                    await copyTextToClipboard(outputValue.value)
                     notify('success', 'Text copied')
                   }}
                 >
@@ -118,7 +121,7 @@ export function GrammarFix({ documentValues, isReadyToSave }: GrammarFixProps) {
               </div>
               {hasResults ? (
                 <div class='flex gap-1 flex-wrap overflow-y-auto w-fu'>
-                  {outputValue.map((word) => (
+                  {outputValueAsArray.value.map((word) => (
                     <WordOutput
                       word={word}
                       synonyms={synonyms}

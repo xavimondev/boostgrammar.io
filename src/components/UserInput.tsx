@@ -1,16 +1,16 @@
-import { StateUpdater, useCallback } from 'preact/hooks'
+import { useCallback } from 'preact/hooks'
 import debounce from 'just-debounce-it'
 import { getCorrectionFromInput } from '@services/grammar'
 
 type UserInputProps = {
-  updateOutputValue: StateUpdater<string[]>
+  setOutputValue: (output: string) => void
   setLoading: (loadingValue: boolean) => void
   setTotalWords: (totalWords: number) => void
   getTotalMistakes: (text: string) => void
 }
 
 export function UserInput({
-  updateOutputValue,
+  setOutputValue,
   setLoading,
   setTotalWords,
   getTotalMistakes
@@ -24,7 +24,7 @@ export function UserInput({
         correctionValue
       })
       setLoading(false)
-      updateOutputValue(correctionValue.split(' '))
+      setOutputValue(correctionValue)
       getTotalMistakes(inputValue)
     }, 200),
     []
@@ -34,7 +34,7 @@ export function UserInput({
     e.preventDefault()
     const inputValue = e.target.value
     if (inputValue === '') {
-      updateOutputValue([])
+      setOutputValue('')
       return
     }
     // trigger debounce
