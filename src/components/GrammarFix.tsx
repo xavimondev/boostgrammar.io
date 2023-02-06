@@ -3,7 +3,6 @@ import { signal } from '@preact/signals'
 import { copyTextToClipboard } from '@utils/copyClipboard'
 import { notify } from '@utils/toast'
 import { transformStringArrayToString } from '@utils/arrayToString'
-import { saveDocument } from '@services/document'
 import { getGrammaticalMistakesFromText } from '@services/grammar'
 import { useOnClickOutside } from 'src/hooks/useOnClickOutSide'
 import { PopoverCoordinates } from '../types'
@@ -32,7 +31,12 @@ const mistakesList = signal([])
 const wordsFromEnteredText = signal<string[]>([])
 const wrongWordsFromEnteredText = signal<string[]>([])
 
-export function GrammarFix() {
+type GrammarFixProps = {
+  documentValues: any
+  isReadyToSave: any
+}
+
+export function GrammarFix({ documentValues, isReadyToSave }: GrammarFixProps) {
   const [outputValue, setOutputValue] = useState<string[]>([])
   const popoverRef = useRef<HTMLDivElement>(undefined)
   const titleRef = useRef<HTMLInputElement>(undefined)
@@ -44,20 +48,10 @@ export function GrammarFix() {
     isOpen.value = false
   })
 
-  const getMistakesFromText = async (text: string) => {
-    // 'Some people does not wanna to eat meals'
-    const { result, wrongWordsList } = await getGrammaticalMistakesFromText(text)
-    mistakesList.value = result
-    wordsFromEnteredText.value = text.split(' ')
-    wrongWordsFromEnteredText.value = wrongWordsList
-  }
-
-  const newDocument = async () => {
+  const setDocumentValues = () => {
     const title = titleRef.current.value || 'Untitled document'
     const userInput = transformStringArrayToString(wordsFromEnteredText.value)
-    const grammarOutput = transformStringArrayToString(outputValue)
-
-    // if (!validateData(userInput, grammarOutput)) return
+    const grammarOutput = 'is a normal grammar oouput'
 
     const totalWords = wordsFromEnteredText.value.length
     const totalMistakes = wrongWordsFromEnteredText.value.length
@@ -70,7 +64,17 @@ export function GrammarFix() {
       totalMistakes
     }
 
-    notify('promise', 'Document saved', saveDocument(doc))
+    documentValues.value = doc
+    isReadyToSave.value = true
+  }
+
+  const getMistakesFromText = async (text: string) => {
+    // 'Some people does not wanna to eat meals'
+    const { result, wrongWordsList } = await getGrammaticalMistakesFromText(text)
+    mistakesList.value = result
+    wordsFromEnteredText.value = text.split(' ')
+    wrongWordsFromEnteredText.value = wrongWordsList
+    setDocumentValues()
   }
 
   return (
