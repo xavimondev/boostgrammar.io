@@ -41,8 +41,8 @@ export function GrammarFix() {
 
   const getMistakesFromText = async (text: string) => {
     // 'Some people does not wanna to eat meals'
-    const mistakes = await getGrammaticalMistakesFromText(text)
-    mistakesList.value = mistakes
+    const { result } = await getGrammaticalMistakesFromText(text)
+    mistakesList.value = result
   }
 
   return (

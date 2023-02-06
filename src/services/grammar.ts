@@ -22,5 +22,5 @@ export const getGrammaticalMistakesFromText = async (text: string) => {
     }
   })
   const response = await request.json()
-  return response.result
+  return response
 }

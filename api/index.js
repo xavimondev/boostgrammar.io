@@ -155,6 +155,9 @@ server.route({
         properties: {
           result: {
             type: 'array'
+          },
+          wrongWordsList: {
+            type: 'array'
           }
         }
       }
@@ -180,6 +183,7 @@ server.route({
 
     const request = await fetch('https://dnaber-languagetool.p.rapidapi.com/v2/check', options)
     const response = await request.json()
+    const wrongWordsList = []
     const result = response.matches.map(match => {
       const { message, replacements, offset, length, rule, sentence } = match
       const correctionsList = replacements.map(rep => rep.value)
@@ -193,6 +197,8 @@ server.route({
       }
       const wrongWord = sentence.substr(offset, length)
 
+      wrongWordsList.push(wrongWord)
+
       return {
         message,
         correctionsList,
@@ -202,7 +208,8 @@ server.route({
       }
     })
     return {
-      result
+      result,
+      wrongWordsList
     }
   }
 })
