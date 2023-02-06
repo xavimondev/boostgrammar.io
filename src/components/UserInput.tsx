@@ -6,9 +6,15 @@ type UserInputProps = {
   updateOutputValue: StateUpdater<string[]>
   setLoading: (loadingValue: boolean) => void
   setTotalWords: (totalWords: number) => void
+  getTotalMistakes: (text: string) => void
 }
 
-export function UserInput({ updateOutputValue, setLoading, setTotalWords }: UserInputProps) {
+export function UserInput({
+  updateOutputValue,
+  setLoading,
+  setTotalWords,
+  getTotalMistakes
+}: UserInputProps) {
   const autoCompleteDebounce = useCallback(
     debounce(async (inputValue: string) => {
       setTotalWords(inputValue.trim().replaceAll(' ', '').length)
@@ -19,6 +25,7 @@ export function UserInput({ updateOutputValue, setLoading, setTotalWords }: User
       })
       setLoading(false)
       updateOutputValue(correctionValue.split(' '))
+      getTotalMistakes(inputValue)
     }, 200),
     []
   )
