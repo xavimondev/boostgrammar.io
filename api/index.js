@@ -185,26 +185,25 @@ server.route({
     const response = await request.json()
     const wrongWordsList = []
     const result = response.matches.map(match => {
-      const { message, replacements, offset, length, rule, sentence } = match
-      const correctionsList = replacements.map(rep => rep.value)
+      const { message: messageIssue, replacements, offset, length, rule, sentence } = match
+      const rightWord = replacements.at(0).value
       // const ruleInfo = {
       //   category: rule.issueType,
       //   description: rule.description
       // }
-      const coordinatesIncorrectWord = {
-        startPosition: offset,
-        endPosition: offset + length
-      }
+      // const coordinatesIncorrectWord = {
+      //   startPosition: offset,
+      //   endPosition: offset + length
+      // }
       const wrongWord = sentence.substr(offset, length)
 
       wrongWordsList.push(wrongWord)
 
       return {
-        message,
-        correctionsList,
+        messageIssue,
+        rightWord,
         categoryIssue: rule.issueType,
-        wrongWord,
-        coordinatesIncorrectWord
+        wrongWord
       }
     })
     return {
