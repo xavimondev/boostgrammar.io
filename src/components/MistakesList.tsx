@@ -1,16 +1,18 @@
+import { Mistake } from 'src/types'
+
 type MistakesList = {
-  mistakesList: any
+  mistakesList: Mistake[]
 }
 
 export function MistakesList({ mistakesList }: MistakesList) {
   return (
     <div className='flex flex-col gap-4'>
-      {mistakesList.map(({ message, categoryIssue, wrongWord, correctionsList }) => (
+      {mistakesList.map(({ messageIssue, categoryIssue, wrongWord, rightWord }) => (
         <MistakeCard
           categoryIssue={categoryIssue}
-          messageIssue={message}
+          messageIssue={messageIssue}
           wrongWord={wrongWord}
-          rightWord={correctionsList.at(0)}
+          rightWord={rightWord}
         />
       ))}
     </div>

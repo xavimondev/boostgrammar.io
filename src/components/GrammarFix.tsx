@@ -5,7 +5,7 @@ import { notify } from '@utils/toast'
 import { transformStringArrayToString } from '@utils/arrayToString'
 import { getGrammaticalMistakesFromText } from '@services/grammar'
 import { useOnClickOutside } from 'src/hooks/useOnClickOutSide'
-import { PopoverCoordinates } from '../types'
+import { Mistake, PopoverCoordinates } from '../types'
 import { UserInput } from './UserInput'
 import { WaitingData } from './WaitingData'
 import { WordOutput } from './WordOutput'
@@ -28,7 +28,7 @@ const popoverCoordinates = signal<PopoverCoordinates>({
 
 const isOpen = signal<boolean>(false)
 const totalWords = signal<number>(0)
-const mistakesList = signal([])
+const mistakesList = signal<Mistake[]>([])
 const wordsFromEnteredText = signal<string[]>([])
 const wrongWordsFromEnteredText = signal<string[]>([])
 const outputValue = signal<string>('')
