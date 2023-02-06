@@ -10,7 +10,7 @@ function IndicatorValue({ children }) {
 
 export function IndicatorsList({ totalWords, totalCharacters, totalMistakes }) {
   return (
-    <div class='flex gap-12 justify-center bg-white rounded-lg py-2'>
+    <div class='flex gap-12 justify-center bg-white rounded-lg py-2 border border-gray-300 md:border-none'>
       <Indicator>
         <IndicatorTitle>words</IndicatorTitle>
         <IndicatorValue>{totalWords}</IndicatorValue>

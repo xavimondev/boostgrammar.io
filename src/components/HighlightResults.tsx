@@ -5,7 +5,7 @@ type HighlightResult = {
 
 export function HighlightResult({ wordsFromEnteredText, wrongWordsFromEnteredText }) {
   return (
-    <div className='bg-white rounded-lg'>
+    <div className='bg-white rounded-lg border border-gray-300 md:border-none'>
       <div class='flex flex-row gap-1 flex-wrap items-center py-2 px-3'>
         {wordsFromEnteredText.map((word: string) => {
           const isWrong = wrongWordsFromEnteredText.indexOf(word) !== -1
