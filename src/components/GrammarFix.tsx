@@ -13,6 +13,7 @@ import { FunFactsEnglish } from './FunFactsEnglish'
 import { PopoverSynonyms } from './PopoverSynonyms'
 import { SynonymsList, SynonymsLoader } from './Synonyms'
 import { IndicatorsList } from './IndicatorsList'
+import { HighlightResult } from './HighlightResults'
 
 const synonyms = signal<string[]>([])
 const wordSelected = signal<string>('')
@@ -156,16 +157,10 @@ export function GrammarFix() {
             </div>
             {/* Highlighting incorrect words */}
             {wordsFromEnteredText.value.length > 0 ? (
-              <div class='flex flex-row gap-1 flex-wrap items-center'>
-                {wordsFromEnteredText.value.map((word) => {
-                  const isWrong = wrongWordsFromEnteredText.value.indexOf(word) === -1
-                  return (
-                    <div class={`${!isWrong ? 'bg-red-400 rounded-md p-0.5 font-semibold' : ''}`}>
-                      <span class={`text-sm sm:text-base text-white`}>{word}</span>
-                    </div>
-                  )
-                })}
-              </div>
+              <HighlightResult
+                wordsFromEnteredText={wordsFromEnteredText.value}
+                wrongWordsFromEnteredText={wrongWordsFromEnteredText.value}
+              />
             ) : null}
 
             {/* Text animation typing saying something like: Here are your mistakes */}
