@@ -16,6 +16,7 @@ import { SynonymsList, SynonymsLoader } from './Synonyms'
 import { IndicatorsList } from './IndicatorsList'
 import { HighlightResult } from './HighlightResults'
 import { MistakesList } from './MistakesList'
+import { ResultsPanel } from './ResultsPanel'
 
 const synonyms = signal<string[]>([])
 const wordSelected = signal<string>('')
@@ -157,27 +158,22 @@ export function GrammarFix({ documentValues, isReadyToSave }: GrammarFixProps) {
             </div>
           </div>
         </div>
-        <aside class='w-full h-full hidden md:block'>
-          <div class='flex flex-col h-full gap-4'>
-            <span class='font-bold text-white text-lg sm:text-xl'>Results</span>
-            <IndicatorsList
-              totalCharacters={totalWords}
-              totalWords={wordsFromEnteredText.value.length}
-              totalMistakes={wrongWordsFromEnteredText.value.length}
+        {/* Text animation typing saying something like: Here are your mistakes */}
+        {/* If user does not have mistakes, app will show an animation with check icon saying everything is ok */}
+        <ResultsPanel>
+          <IndicatorsList
+            totalCharacters={totalWords}
+            totalWords={wordsFromEnteredText.value.length}
+            totalMistakes={wrongWordsFromEnteredText.value.length}
+          />
+          <MistakesList mistakesList={mistakesList.value} />
+          {wordsFromEnteredText.value.length > 0 ? (
+            <HighlightResult
+              wordsFromEnteredText={wordsFromEnteredText.value}
+              wrongWordsFromEnteredText={wrongWordsFromEnteredText.value}
             />
-            <MistakesList mistakesList={mistakesList.value} />
-            {/* Highlighting incorrect words */}
-            {wordsFromEnteredText.value.length > 0 ? (
-              <HighlightResult
-                wordsFromEnteredText={wordsFromEnteredText.value}
-                wrongWordsFromEnteredText={wrongWordsFromEnteredText.value}
-              />
-            ) : null}
-
-            {/* Text animation typing saying something like: Here are your mistakes */}
-            {/* If user does not have mistakes, app will show an animation with check icon saying everything is ok */}
-          </div>
-        </aside>
+          ) : null}
+        </ResultsPanel>
       </div>
     </>
   )
