@@ -5,7 +5,7 @@ import { getAllDocuments } from '@services/document'
 import { Placeholder } from './Placeholder'
 import { NoDataFound } from './NoDataFound'
 
-type DocumentCard = {
+type DocumentItem = {
   id: string
   title: string
   user_input: string
@@ -20,11 +20,11 @@ function DocumentItem({
   total_words,
   total_mistakes,
   created_at
-}: DocumentCard) {
+}: DocumentItem) {
   return (
     <div class='rounded-lg p-0.5 shadow bg-gradient-to-r from-[#7debf2] to-[#60a4ff] max-h-full transition hover:scale-105 z-10'>
       <div class='bg-[#0d1117] rounded-lg h-full'>
-        <a href='#' class='h-full block overflow-hidden'>
+        <div class='h-full block overflow-hidden'>
           <div class='flex flex-col w-full h-full p-6 justify-between'>
             <span class='mb-2 text-slate-400 text-sm text-right'>
               {formatDateFromString(created_at)}
@@ -40,7 +40,7 @@ function DocumentItem({
               </span>
             </div>
           </div>
-        </a>
+        </div>
       </div>
     </div>
   )
