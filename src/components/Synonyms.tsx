@@ -18,7 +18,7 @@ type SynonymButtonProps = {
 
 export function SynonymButton({ synonymValue }: SynonymButtonProps) {
   return (
-    <button class='text-sm sm:text-base font-bold py-1 px-6 sm:px-8 bg-blue-100 text-blue-800 rounded-lg hover:bg-green-500 hover:text-white'>
+    <button class='text-sm sm:text-base font-bold py-1 px-6 sm:px-8 bg-blue-100 text-blue-800 rounded-lg'>
       {synonymValue}
     </button>
   )
