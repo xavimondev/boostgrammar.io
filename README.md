@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://boostgrammar-io.pages.dev/" target="_blank">
-    <img src="https://boostgrammar-io.pages.dev/panel.png" width="100%" alt="Banner" />
+    <img src="https://boostgrammar-io.pages.dev/ogimage.jpeg" width="100%" alt="Banner" />
   </a>
 </p>
 
