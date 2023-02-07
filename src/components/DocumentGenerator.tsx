@@ -1,3 +1,4 @@
+import { useEffect } from 'preact/hooks'
 import { signal } from '@preact/signals'
 import { supabase } from '@lib/database'
 import { saveDocument } from '@services/document'
@@ -15,12 +16,20 @@ const initialState = {
 
 const documentValues = signal<any>(initialState)
 const isReadyToSave = signal<boolean>(false)
+const isUserLogged = signal<boolean>(false)
 
 export function DocumentGenerator() {
-  const newDocument = async () => {
-    const user = await supabase.auth.getUser()
-    console.log(user)
+  useEffect(() => {
+    const getUserData = async () => {
+      const { data } = await supabase.auth.getUser()
+      if (data.user) {
+        isUserLogged.value = true
+      }
+    }
+    getUserData()
+  }, [])
 
+  const newDocument = async () => {
     notify('promise', 'Document saved', saveDocument(documentValues.value))
 
     isReadyToSave.value = false
@@ -36,18 +45,20 @@ export function DocumentGenerator() {
               <BackIc />
               <span class='text-base hidden sm:block font-semibold'>All Documents</span>
             </a>
-            <button
-              id='save'
-              onClick={newDocument}
-              disabled={!isReadyToSave.value}
-              class={`rounded-md py-2 px-5 text-white font-semibold text-sm sm:text-base ${
-                !isReadyToSave.value
-                  ? 'bg-gray-400'
-                  : 'bg-gradient-to-r from-[#7debf2] to-[#60a4ff]'
-              }`}
-            >
-              Save
-            </button>
+            {isUserLogged.value && (
+              <button
+                id='save'
+                onClick={newDocument}
+                disabled={!isReadyToSave.value}
+                class={`rounded-md py-2 px-5 text-white font-semibold text-sm sm:text-base ${
+                  !isReadyToSave.value
+                    ? 'bg-gray-400'
+                    : 'bg-gradient-to-r from-[#7debf2] to-[#60a4ff]'
+                }`}
+              >
+                Save
+              </button>
+            )}
           </div>
         </nav>
       </div>

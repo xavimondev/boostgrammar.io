@@ -1,9 +1,10 @@
 import { useRef } from 'preact/hooks'
 import { signal, computed } from '@preact/signals'
+import { getGrammaticalMistakesFromText } from '@services/grammar'
+import { supabase } from '@lib/database'
 import { copyTextToClipboard } from '@utils/copyClipboard'
 import { notify } from '@utils/toast'
 import { transformStringArrayToString } from '@utils/arrayToString'
-import { getGrammaticalMistakesFromText } from '@services/grammar'
 import { useOnClickOutside } from '@hooks/useOnClickOutSide'
 import { Mistake, PopoverCoordinates } from '../types'
 import { UserInput } from './UserInput'
@@ -57,10 +58,12 @@ export function GrammarFix({ documentValues, isReadyToSave }: GrammarFixProps) {
     isOpen.value = false
   })
 
-  const setDocumentValues = () => {
+  const setDocumentValues = async () => {
     const title = titleRef.current.value || 'Untitled document'
     const userInput = transformStringArrayToString(wordsFromEnteredText.value)
-    const grammarOutput = 'is a normal grammar oouput'
+    const grammarOutput = outputValue.value
+    const { data } = await supabase.auth.getUser()
+    const userId = data.user.id
 
     const totalWords = wordsFromEnteredText.value.length
     const totalMistakes = wrongWordsFromEnteredText.value.length
@@ -70,7 +73,8 @@ export function GrammarFix({ documentValues, isReadyToSave }: GrammarFixProps) {
       userInput,
       grammarOutput,
       totalWords,
-      totalMistakes
+      totalMistakes,
+      userId
     }
 
     documentValues.value = doc

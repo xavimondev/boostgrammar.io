@@ -1,3 +1,4 @@
+import { User } from '@supabase/supabase-js'
 import { supabase } from '@lib/database'
 
 interface Document {
@@ -7,16 +8,18 @@ interface Document {
   grammarOutput: string
   totalWords: number
   totalMistakes: number
+  userId: User['id']
 }
 
 export const saveDocument = async (document: Document) => {
-  const { title, userInput, grammarOutput, totalWords, totalMistakes } = document
+  const { title, userInput, grammarOutput, totalWords, totalMistakes, userId } = document
   const { error } = await supabase.from('documents').insert({
     title: title,
     user_input: userInput,
     grammar_output: grammarOutput,
     total_words: totalWords,
-    total_mistakes: totalMistakes
+    total_mistakes: totalMistakes,
+    user_id: userId
   })
   if (error) {
     console.log(error)
