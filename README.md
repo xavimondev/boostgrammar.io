@@ -39,9 +39,13 @@ Have issues with your grammar skills? Let boostgrammar.io help you out and say g
 2. Go to [API Keys](https://dashboard.cohere.ai/api-keys).
 3. Click on **New Trial Key** and copy your **Trial Key**.
 
-# Inspiration
+# Resources
 
-I took as references these pages [Parcel.io](https://parcel.io/) and [Scale](https://scale.com/) to build the design.
+1. [Loaders](https://codepen.io/Aisha-Rashed/pen/YzPEZJY).
+2. Design: [Parcel.io](https://parcel.io/) and [Scale](https://scale.com/).
+3. [Gradients.](https://hypercolor.dev/)
+4. [Illustrations for empty states.](https://storyset.com/)
+5. [Icons.](https://www.systemuicons.com/)
 
 # Run locally
 
