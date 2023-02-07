@@ -1,6 +1,6 @@
 import { ThinkIc } from './Icons'
 
-export function EmptyStateOuput() {
+export function EmptyStateOutput() {
   return (
     <div class='flex flex-col items-center gap-6 h-full w-full mt-6'>
       <ThinkIc class='inline-block w-24 h-24 sm:w-28 sm:h-28' />
