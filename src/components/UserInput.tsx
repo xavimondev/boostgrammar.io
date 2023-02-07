@@ -33,7 +33,9 @@ export function UserInput({
       setOutputValue('')
       return
     }
+    console.log(inputValue)
     // trigger debounce
+    setOutputValue('')
     setLoading(true)
     autoCompleteDebounce(inputValue)
   }
