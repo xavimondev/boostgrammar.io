@@ -7,7 +7,7 @@ import { getGrammaticalMistakesFromText } from '@services/grammar'
 import { useOnClickOutside } from '@hooks/useOnClickOutSide'
 import { Mistake, PopoverCoordinates } from '../types'
 import { UserInput } from './UserInput'
-import { WaitingData } from './WaitingData'
+import { EmptyStateOuput } from './EmptyStateOuput'
 import { WordOutput } from './WordOutput'
 import { CopyToClipboardIc } from './Icons'
 import { FunFactsEnglish } from './FunFactsEnglish'
@@ -141,7 +141,7 @@ export function GrammarFix({ documentValues, isReadyToSave }: GrammarFixProps) {
                   ))}
                 </div>
               ) : null}
-              {!isLoading.value && !hasResults && <WaitingData />}
+              {!isLoading.value && !hasResults && <EmptyStateOuput />}
               {isLoading.value && <FunFactsEnglish />}
               {isOpen.value && (
                 <PopoverSynonyms coordinates={popoverCoordinates.value} popoverRef={popoverRef}>
