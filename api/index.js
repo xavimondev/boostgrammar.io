@@ -138,13 +138,10 @@ server.route({
     const response = await requestCohere.json()
     const { text } = response.generations[0]
 
-    // console.log({response, text})
-    // Fix when model is xlarge or medium
-    // const indexBreak = text.indexOf('\n')
-    // const textOutput = text.substring(0, indexBreak)
-    // const textOutput = text. //replace('--', '').replaceAll('"', '').trim()
+    const indexBreak = text.indexOf('\n')
+    const result = indexBreak === -1 ? text.trim() : text.substring(0, indexBreak)
     return {
-      output: text.trim()
+      output: result
     }
   }
 })
