@@ -1,12 +1,9 @@
-import { useRef } from 'preact/hooks'
-import { signal, computed } from '@preact/signals'
-import { getGrammaticalMistakesFromText } from '@services/grammar'
-import { supabase } from '@lib/database'
+import { Ref, useRef } from 'preact/hooks'
+import { signal } from '@preact/signals'
 import { copyTextToClipboard } from '@utils/copyClipboard'
 import { notify } from '@utils/toast'
-import { transformStringArrayToString } from '@utils/arrayToString'
 import { useOnClickOutside } from '@hooks/useOnClickOutSide'
-import { Mistake, PopoverCoordinates } from '../types'
+import { PopoverCoordinates } from '../types'
 import { UserInput } from './UserInput'
 import { EmptyStateOutput } from './EmptyStateOutput'
 import { WordOutput } from './WordOutput'
@@ -24,71 +21,44 @@ import { NoMistakesFound } from './NoMistakesFound'
 const synonyms = signal<string[]>([])
 const wordSelected = signal<string>('')
 const isLoadingSynonyms = signal<boolean>(false)
-const isLoading = signal(false)
 const popoverCoordinates = signal<PopoverCoordinates>({
   top: 0,
   left: 0
 })
-
 const isOpen = signal<boolean>(false)
-const totalWords = signal<number>(0)
-const mistakesList = signal<Mistake[]>([])
-const wordsFromEnteredText = signal<string[]>([])
-const wrongWordsFromEnteredText = signal<string[]>([])
-const outputValue = signal<string>('')
-// When `outputValue` changes, this re-runs automatically:
-const outputValueAsArray = computed(() => {
-  return outputValue.value.length === 0 ? [] : outputValue.value.split(' ')
-})
+
 const isDialogOpen = signal<boolean>(false)
 
 type GrammarFixProps = {
-  documentValues: any
-  isReadyToSave: any
+  isLoading: any
+  totalCharacteres: any
+  outputValue: any
+  outputValueAsArray: any
+  wordsFromEnteredText: any
+  wrongWordsFromEnteredText: any
+  mistakesList: any
+  titleRef: Ref<HTMLInputElement>
+  textEnteredRef: Ref<HTMLTextAreaElement>
 }
 
-export function GrammarFix({ documentValues, isReadyToSave }: GrammarFixProps) {
+export function GrammarFix({
+  isLoading,
+  totalCharacteres,
+  outputValue,
+  outputValueAsArray,
+  wordsFromEnteredText,
+  wrongWordsFromEnteredText,
+  mistakesList,
+  titleRef,
+  textEnteredRef
+}: GrammarFixProps) {
   const popoverRef = useRef<HTMLDivElement>(undefined)
-  const titleRef = useRef<HTMLInputElement>(undefined)
 
-  const setLoading = (isLoadingValue: boolean) => (isLoading.value = isLoadingValue)
   const hasResults = outputValue.value !== ''
 
   useOnClickOutside(popoverRef, () => {
     isOpen.value = false
   })
-
-  const setDocumentValues = async () => {
-    const title = titleRef.current.value || 'Untitled document'
-    const userInput = transformStringArrayToString(wordsFromEnteredText.value)
-    const grammarOutput = outputValue.value
-    const { data } = await supabase.auth.getUser()
-    const userId = data.user.id
-
-    const totalWords = wordsFromEnteredText.value.length
-    const totalMistakes = wrongWordsFromEnteredText.value.length
-
-    const doc = {
-      title,
-      userInput,
-      grammarOutput,
-      totalWords,
-      totalMistakes,
-      userId
-    }
-
-    documentValues.value = doc
-    isReadyToSave.value = true
-  }
-
-  const getMistakesFromText = async (text: string) => {
-    // 'Some people does not wanna to eat meals'
-    const { result, wrongWordsList } = await getGrammaticalMistakesFromText(text)
-    mistakesList.value = result
-    wordsFromEnteredText.value = text.split(' ')
-    wrongWordsFromEnteredText.value = wrongWordsList
-    setDocumentValues()
-  }
 
   return (
     <>
@@ -106,12 +76,7 @@ export function GrammarFix({ documentValues, isReadyToSave }: GrammarFixProps) {
           </div>
           <div class='flex flex-col gap-2 h-full w-full'>
             <div class='h-1/2'>
-              <UserInput
-                setOutputValue={(output: string) => (outputValue.value = output)}
-                setLoading={setLoading}
-                setTotalWords={(total: number) => (totalWords.value = total)}
-                getTotalMistakes={(text: string) => getMistakesFromText(text)}
-              />
+              <UserInput textEnteredRef={textEnteredRef} />
             </div>
             <div class='flex flex-col gap-2 h-1/2 w-full relative'>
               <div class='flex flex-row justify-between w-full'>
@@ -130,7 +95,7 @@ export function GrammarFix({ documentValues, isReadyToSave }: GrammarFixProps) {
               </div>
               {hasResults ? (
                 <div class='flex gap-1 flex-wrap overflow-y-auto w-full'>
-                  {outputValueAsArray.value.map((word) => (
+                  {outputValueAsArray.value.map((word: string) => (
                     <WordOutput
                       word={word}
                       synonyms={synonyms}
@@ -167,7 +132,7 @@ export function GrammarFix({ documentValues, isReadyToSave }: GrammarFixProps) {
         </div>
         <ResultsPanel>
           <IndicatorsList
-            totalCharacters={totalWords}
+            totalCharacters={totalCharacteres.value}
             totalWords={wordsFromEnteredText.value.length}
             totalMistakes={wrongWordsFromEnteredText.value.length}
           />
@@ -187,7 +152,7 @@ export function GrammarFix({ documentValues, isReadyToSave }: GrammarFixProps) {
       {isDialogOpen.value && (
         <DialogResult hideDialog={() => (isDialogOpen.value = false)}>
           <IndicatorsList
-            totalCharacters={totalWords}
+            totalCharacters={totalCharacteres.value}
             totalWords={wordsFromEnteredText.value.length}
             totalMistakes={wrongWordsFromEnteredText.value.length}
           />
