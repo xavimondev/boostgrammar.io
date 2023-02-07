@@ -41,7 +41,7 @@ Have issues with your grammar skills? Let boostgrammar.io help you out and say g
 
 # Inspiration
 
-I took as a references this page [Parcel.io](https://parcel.io/) and [Scale](https://scale.com/) to build the design.
+I took as references these pages [Parcel.io](https://parcel.io/) and [Scale](https://scale.com/) to build the design.
 
 # Run locally
 
