@@ -4,7 +4,7 @@ import { copyTextToClipboard } from '@utils/copyClipboard'
 import { notify } from '@utils/toast'
 import { transformStringArrayToString } from '@utils/arrayToString'
 import { getGrammaticalMistakesFromText } from '@services/grammar'
-import { useOnClickOutside } from 'src/hooks/useOnClickOutSide'
+import { useOnClickOutside } from '@hooks/useOnClickOutSide'
 import { Mistake, PopoverCoordinates } from '../types'
 import { UserInput } from './UserInput'
 import { WaitingData } from './WaitingData'
@@ -16,7 +16,8 @@ import { SynonymsList, SynonymsLoader } from './Synonyms'
 import { IndicatorsList } from './IndicatorsList'
 import { HighlightResult } from './HighlightResults'
 import { MistakesList } from './MistakesList'
-import { ResultsPanel } from './ResultsPanel'
+import { ResultsPanel, ResultsPanelToolbar } from './ResultsPanel'
+import { DialogResult } from './DialogResult'
 
 const synonyms = signal<string[]>([])
 const wordSelected = signal<string>('')
@@ -37,6 +38,7 @@ const outputValue = signal<string>('')
 const outputValueAsArray = computed(() => {
   return outputValue.value.length === 0 ? [] : outputValue.value.split(' ')
 })
+const isDialogOpen = signal<boolean>(false)
 
 type GrammarFixProps = {
   documentValues: any
@@ -85,7 +87,7 @@ export function GrammarFix({ documentValues, isReadyToSave }: GrammarFixProps) {
 
   return (
     <>
-      <div class='flex flex-col md:flex-row gap-8 sm:gap-4 w-full h-full'>
+      <div class='flex flex-col md:flex-row gap-8 sm:gap-4 w-full h-full relative'>
         <div class='flex flex-col h-full w-full'>
           <div class='mb-10'>
             <input
@@ -122,7 +124,7 @@ export function GrammarFix({ documentValues, isReadyToSave }: GrammarFixProps) {
                 </button>
               </div>
               {hasResults ? (
-                <div class='flex gap-1 flex-wrap overflow-y-auto w-fu'>
+                <div class='flex gap-1 flex-wrap overflow-y-auto w-full'>
                   {outputValueAsArray.value.map((word) => (
                     <WordOutput
                       word={word}
@@ -174,7 +176,24 @@ export function GrammarFix({ documentValues, isReadyToSave }: GrammarFixProps) {
           ) : null}
           <MistakesList mistakesList={mistakesList.value} />
         </ResultsPanel>
+        <ResultsPanelToolbar onClick={() => (isDialogOpen.value = true)} />
       </div>
+      {isDialogOpen.value && (
+        <DialogResult hideDialog={() => (isDialogOpen.value = false)}>
+          <IndicatorsList
+            totalCharacters={totalWords}
+            totalWords={wordsFromEnteredText.value.length}
+            totalMistakes={wrongWordsFromEnteredText.value.length}
+          />
+          {wordsFromEnteredText.value.length > 0 ? (
+            <HighlightResult
+              wordsFromEnteredText={wordsFromEnteredText.value}
+              wrongWordsFromEnteredText={wrongWordsFromEnteredText.value}
+            />
+          ) : null}
+          <MistakesList mistakesList={mistakesList.value} />
+        </DialogResult>
+      )}
     </>
   )
 }
