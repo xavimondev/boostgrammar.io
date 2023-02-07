@@ -1,20 +1,10 @@
 ---
-import { SignOutButton } from './SignOutButton'
+import { AuthToolbar } from './auth/AuthToolBar'
 ---
 
 <nav class='px-5 md:px-12 bg-gray-900'>
   <div class='flex h-16 items-center justify-between'>
     <a href='/' class='text-xl text-white'>boostgrammar.io</a>
-    <div class='flex flex-row justify-center items-center gap-6'>
-      <div class='flex flex-row justify-center items-center gap-2'>
-        <img
-          src='https://unavatar.io/github/d3vcloud'
-          alt='Avatar of xavimon'
-          class='w-8 h-8 rounded-full'
-        />
-        <span class='text-white text-base font-semibold hidden sm:block'>Xavier Alfaro</span>
-      </div>
-      <SignOutButton client:visible />
-    </div>
+    <AuthToolbar client:load />
   </div>
 </nav>
