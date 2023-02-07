@@ -111,13 +111,12 @@ server.route({
   handler: async (req, reply) => {
     const body = req.body
     const { input } = JSON.parse(body)
-    console.log(input)
     const data = {
-      model: 'xlarge',
+      model: 'command-xlarge-nightly', // xlarge
       prompt: `${PROMPT_EXAMPLES}
       Incorrect sample:${input}
       Correct sample:`,
-      max_tokens: 400,
+      max_tokens: 500,
       temperature: 0, // same response
       k: 0,
       p: 1,
@@ -138,9 +137,14 @@ server.route({
     })
     const response = await requestCohere.json()
     const { text } = response.generations[0]
-    const textOutput = text.replace('--', '').replaceAll('"', '').trim()
+
+    // console.log({response, text})
+    // Fix when model is xlarge or medium
+    // const indexBreak = text.indexOf('\n')
+    // const textOutput = text.substring(0, indexBreak)
+    // const textOutput = text. //replace('--', '').replaceAll('"', '').trim()
     return {
-      output: textOutput
+      output: text.trim()
     }
   }
 })
