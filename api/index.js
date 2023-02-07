@@ -112,7 +112,7 @@ server.route({
     const body = req.body
     const { input } = JSON.parse(body)
     const data = {
-      model: 'command-xlarge-nightly', // xlarge
+      model: 'xlarge', // xlarge
       prompt: `${PROMPT_EXAMPLES}
       Incorrect sample:${input}
       Correct sample:`,
