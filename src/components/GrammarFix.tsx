@@ -18,6 +18,7 @@ import { HighlightResult } from './HighlightResults'
 import { MistakesList } from './MistakesList'
 import { ResultsPanel, ResultsPanelToolbar } from './ResultsPanel'
 import { DialogResult } from './DialogResult'
+import { NoMistakesFound } from './NoMistakesFound'
 
 const synonyms = signal<string[]>([])
 const wordSelected = signal<string>('')
@@ -160,14 +161,15 @@ export function GrammarFix({ documentValues, isReadyToSave }: GrammarFixProps) {
             </div>
           </div>
         </div>
-        {/* Text animation typing saying something like: Here are your mistakes */}
-        {/* If user does not have mistakes, app will show an animation with check icon saying everything is ok */}
         <ResultsPanel>
           <IndicatorsList
             totalCharacters={totalWords}
             totalWords={wordsFromEnteredText.value.length}
             totalMistakes={wrongWordsFromEnteredText.value.length}
           />
+          {mistakesList.value.length === 0 && wordsFromEnteredText.value.length > 0 ? (
+            <NoMistakesFound />
+          ) : null}
           {wordsFromEnteredText.value.length > 0 ? (
             <HighlightResult
               wordsFromEnteredText={wordsFromEnteredText.value}
