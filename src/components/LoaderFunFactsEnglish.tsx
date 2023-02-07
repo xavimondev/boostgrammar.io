@@ -7,7 +7,7 @@ const funFact = signal<string>(
   'Getting results...In the meantime, Did you know these fun facts about english? 🤔'
 )
 
-export function FunFactsEnglish() {
+export function LoaderFunFactsEnglish() {
   useEffect(() => {
     const intervalId = setInterval(() => {
       const pos = Math.floor(Math.random() * FUN_FACTS_ENGLISH.length)

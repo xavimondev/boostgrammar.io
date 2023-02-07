@@ -10,7 +10,7 @@ import { UserInput } from './UserInput'
 import { EmptyStateOuput } from './EmptyStateOuput'
 import { WordOutput } from './WordOutput'
 import { CopyToClipboardIc } from './Icons'
-import { FunFactsEnglish } from './FunFactsEnglish'
+import { LoaderFunFactsEnglish } from './LoaderFunFactsEnglish'
 import { PopoverSynonyms } from './PopoverSynonyms'
 import { SynonymsList, SynonymsLoader } from './Synonyms'
 import { IndicatorsList } from './IndicatorsList'
@@ -142,7 +142,7 @@ export function GrammarFix({ documentValues, isReadyToSave }: GrammarFixProps) {
                 </div>
               ) : null}
               {!isLoading.value && !hasResults && <EmptyStateOuput />}
-              {isLoading.value && <FunFactsEnglish />}
+              {isLoading.value && <LoaderFunFactsEnglish />}
               {isOpen.value && (
                 <PopoverSynonyms coordinates={popoverCoordinates.value} popoverRef={popoverRef}>
                   <SynonymsList synonyms={synonyms.value} />
