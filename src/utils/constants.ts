@@ -6,7 +6,7 @@ const isDevelopment = import.meta.env.MODE === 'development'
 export const SERVER = isDevelopment ? LOCAL_SERVER_URL : REMOTE_SERVER_URL
 export const DASHBOARD_URL = isDevelopment
   ? `${LOCAL_CLIENT_URL}/dashboard`
-  : `${REMOTE_SERVER_URL}/dashboard`
+  : `https://boostgrammar-io.pages.dev/dashboard`
 
 export const FUN_FACTS_ENGLISH = [
   'English actually originates from what is now called north west Germany and the Netherlands.',
