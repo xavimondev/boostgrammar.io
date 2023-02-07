@@ -23,6 +23,7 @@ export function WordOutput({
       class='text-base sm:text-lg text-white'
       id='grammarOutput'
       onDblClick={async (event) => {
+        synonyms.value = []
         setPopoverCoordinates({
           left: event.currentTarget.offsetLeft,
           top: event.currentTarget.offsetTop + 28
