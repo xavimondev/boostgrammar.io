@@ -6,7 +6,7 @@ type MistakesList = {
 
 export function MistakesList({ mistakesList }: MistakesList) {
   return (
-    <div className='flex flex-col gap-4 border border-gray-300 md:border-none'>
+    <div className='flex flex-col gap-4'>
       {mistakesList.map(({ messageIssue, categoryIssue, wrongWord, rightWord }) => (
         <MistakeCard
           categoryIssue={categoryIssue}
@@ -27,7 +27,7 @@ type MistakeCard = {
 
 export function MistakeCard({ categoryIssue, messageIssue, wrongWord, rightWord }: MistakeCard) {
   return (
-    <div class='flex flex-col gap-3 rounded-lg bg-white'>
+    <div class='flex flex-col gap-3 rounded-lg bg-white border border-gray-300 md:border-none'>
       <div class='p-4 flex flex-col gap-4'>
         <span class='text-gray-400 uppercase text-sm'>{categoryIssue}</span>
         <div class='flex flex-row gap-7 items-center'>
